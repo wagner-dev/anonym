@@ -3,9 +3,13 @@ import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
     :root{
         /* colors */
-        --clr-primary-120: rgb(73 198 255);
+        --clr-primary-180: #e4faff;
+        --clr-primary-160: #c8f4ff;
+        --clr-primary-140: #7cd6ff;
+        --clr-primary-120: rgb(104 225 253);
         --clr-primary-100: rgb(0, 176, 255);
         --clr-primary-80: rgb(1 165 239);
+        --clr-primary-60: #489caf;
         --clr-black-100: rgb(0 0 0);
         --clr-black-80: rgb(28 30 33);
         --clr-black-60: rgb(68 73 80);

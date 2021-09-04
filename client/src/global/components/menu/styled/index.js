@@ -7,6 +7,7 @@ export const MenuBody = styled.header`
     position: fixed;
     top: 0%;
     border-bottom: ${(props) => props.border ? '1px solid #dbdbdb' : 'none'};
+    z-index: 1000;
 `
 export const Menu = styled.nav`
     padding: .9rem 0rem;

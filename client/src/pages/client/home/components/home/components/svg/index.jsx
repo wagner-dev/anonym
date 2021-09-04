@@ -7,7 +7,7 @@ export default function SvgComponent(){
     return(
         <Body>
             <Svg>
-                <img src={ImageSvg} />
+                <img src={ImageSvg} alt="bem-vindo" />
             </Svg>
         </Body>
     )
