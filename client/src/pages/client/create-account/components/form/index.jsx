@@ -31,7 +31,7 @@ export default function Data({form, submit, RequestLogin, errors, alert}){
     return(
         <Body>
             <Title>
-                <h2>Login</h2>
+                <h2>Criar conta</h2>
             </Title>
             {Object.keys(errors).length || alert.msg.length ? 
                 <Alert type={alert.type || 'err'}>
@@ -88,7 +88,7 @@ export default function Data({form, submit, RequestLogin, errors, alert}){
                     <input type="submit" value="Entrar" />
                 </Button>
                 <Link>
-                    <a href="/criar-conta">Criar conta</a>
+                    <a href="/login">Login?</a>
                 </Link>
             </Form>
         </Body>

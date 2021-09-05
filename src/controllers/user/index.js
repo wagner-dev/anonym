@@ -3,17 +3,52 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
+const { create } = require('../../models/user/index')
 
 module.exports = {
     async index(req, res){
         await 
         res.json(await User.find({}))
     },
+    async create(req, res) {
+        const { username, email, password } = req.body
+        const { errors } = validationResult(req)
+        const errorsUsername = username.match(/[^a-z0-9-_.]/img)
+
+        if(!errors.length && !errorsUsername){
+            const hasUser = await User.findOne({username})
+            if(hasUser){
+                res.json({message: 'Usuário já existente', status: 422, create: false})
+            }
+            else{
+                const hasEmail = await User.findOne({email})
+                if(hasEmail){
+                    res.json({message: 'Email já existente', status: 422, create: false})
+                }
+                else{
+                    const passCript = await bcrypt.hash(password, 10, async (err, result) => {
+                        if(err){
+                            res.json({message: 'Ocorreu um erro ao criptografar a senha', status: 422, create: false})
+                        }
+                        else{
+                            const newUser = await User.create({username, email, password: result})
+                            res.json({message: 'Conta criada com sucesso', status: 200, create: true})
+                        }
+                    })
+                }
+            }
+        }
+        else{
+            res.json({message: 'Campo(s) inválido(s)', status: 422, create: false})
+        }
+
+
+    },
     async check(req, res) {
         const { username, email, password } = req.body
 
         const { errors } = validationResult(req)
-        const errorsUsername = username ? username.match(/[^a-z0-9-_.]/img) : ['err']
+        const errorsUsername = username.match(/[^a-z0-9-_.]/img)
         
         if(!errors.length){
             if(!errorsUsername){
