@@ -2,7 +2,11 @@ const router = require('express').Router()
 const UserController = require('../controllers/user/index')
 const { body } = require('express-validator')
 
-router.get('/user/index', UserController.index)
+router.get('/user/index', UserController.indexall)
+
+router.get('/user/:token/index', [
+    body("token").notEmpty()
+], UserController.index)
 
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),

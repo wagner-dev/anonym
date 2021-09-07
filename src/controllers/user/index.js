@@ -3,12 +3,55 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
-const { create } = require('../../models/user/index')
+const { verifyToken } = require('../../services/auth/index')
+const Post = require('../../models/post/index')
 
 module.exports = {
-    async index(req, res){
-        await 
+    async indexall(req, res){
         res.json(await User.find({}))
+    },
+    async index(req, res){
+        const token = req.params.token
+        const errors = validationResult(req)
+        if(!errors.length){
+            const user = await verifyToken(token)
+            if(user){
+                User.findOne({_id: user._id}).then(({username, email, followings, followers, isAdmin, desc}) => {
+                    if(username){
+                        res.json({
+                            username,
+                            email,
+                            followings: followings.length,
+                            followers: followers.length,
+                            isAdmin, desc
+                        })
+                    }
+                    else{
+                        res.json({message: "ok", status: 401,
+                        user:{
+                            isAnonymous: true
+                        }})
+                    }
+                }).catch(() => {
+                    res.json({message: "ok", status: 401,
+                    user:{
+                        isAnonymous: true
+                    }})
+                })
+            }
+            else{
+                res.json({message: "ok", status: 401,
+                user:{
+                    isAnonymous: true
+                }})
+            }
+        }
+        else{
+            res.json({message: "ok", status: 401,
+            user:{
+                isAnonymous: true
+            }})
+        }
     },
     async create(req, res) {
         const { username, email, password } = req.body

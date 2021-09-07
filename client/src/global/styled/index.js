@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         --clr-black-100: rgb(0 0 0);
         --clr-black-80: rgb(28 30 33);
         --clr-black-60: rgb(68 73 80);
+        --clr-black-20: #dbdbdb;
 
         /* text */
             --text-160: 1.675rem;
@@ -34,9 +35,13 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0rem;
         padding: 0rem;
         box-sizing: border-box;
-        font-family: 'Roboto', 'Open Sans', 'Montserrat';
+        font-family: 'Open Sans', 'Roboto', 'Montserrat';
     }
     a{
         text-decoration: none;
+        color: #000;
+    }
+    img,span, h1, h2, h3, h4, svg, a, p{
+        user-select: none;
     }
 `
