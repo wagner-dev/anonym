@@ -1,17 +1,5 @@
 const mongoose = require('mongoose')
 
-const SubCommentsSchema = mongoose.Schema({
-    userId: {
-        type: String,
-        required: true
-    },
-    body: {
-        type: String,
-        min: 1,
-        max: 120,
-        required: true
-    }
-})
 
 const LikesSchema = mongoose.Schema({
     userId: {
@@ -26,7 +14,26 @@ const LikesSchema = mongoose.Schema({
     timestamps: true
 })
 
+const SubCommentsSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+    body: {
+        type: String,
+        min: 1,
+        max: 120,
+        required: true
+    }
+})
+
 const CommentsSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
     body: {
         type: String,
         min: 1,

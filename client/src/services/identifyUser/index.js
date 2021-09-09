@@ -14,7 +14,7 @@ export const IdentifyUser = ({component: Component}, ...rest) => {
         if(token){
             api.get(`/user/${token}/index`).then(({data, status}) => {
                 if(status === 200){
-                    setUser(data)
+                    setUser(data.user)
                 }
             })
         }

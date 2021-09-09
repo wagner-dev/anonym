@@ -8,7 +8,39 @@ const Post = require('../../models/post/index')
 
 module.exports = {
     async indexall(req, res){
-        res.json(await User.find({}))
+        res.json(await Post.find({}))
+    },
+    async indexfull(req, res){
+        const token = req.params.token
+        const errors = validationResult(req)
+        if(!errors.length){
+            const user = await verifyToken(token)
+            if(user){
+                User.findOne({_id: user._id}).then(async ({username, email, isAdmin, desc, followings, followers}) => {
+                    const posts = await Post.find({userId: user._id}, {userId: 0, "comments._id": 0, "comments.subComments._id": 0})
+                                            .populate('comments.userId', {username: 1, isAdmin: 1, _id: 0})
+                                            .populate('comments.subComments.userId', {username: 1, isAdmin: 1, _id: 0})
+                    const postsFormated = posts.map(({likes, saved, body, comments, createdAt, _id}) => {return {_id, likes: likes.length, saved: saved.length, body, comments, createdAt }})
+                    if(username){
+                        res.json({"user": {
+                            followers :followers.length,
+                            followings: followings.length,
+                            posts: postsFormated,
+                            username, email, isAdmin, desc,
+                        }, status: 200})
+                    }
+                    else{
+                        res.json({message: "ok", status: 401})
+                    }
+                })
+            }
+            else{
+                res.json({message: "ok", status: 401})
+            }
+        }
+        else{
+            res.json({message: "ok", status: 401})
+        }
     },
     async index(req, res){
         const token = req.params.token
@@ -16,15 +48,12 @@ module.exports = {
         if(!errors.length){
             const user = await verifyToken(token)
             if(user){
-                User.findOne({_id: user._id}).then(({username, email, followings, followers, isAdmin, desc}) => {
+                User.findOne({_id: user._id}).then(async ({username, email, isAdmin, desc}) => {
                     if(username){
-                        res.json({
+                        res.json({"user": {
                             username,
                             email,
-                            followings: followings.length,
-                            followers: followers.length,
-                            isAdmin, desc
-                        })
+                        }})
                     }
                     else{
                         res.json({message: "ok", status: 401,

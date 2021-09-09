@@ -8,6 +8,10 @@ router.get('/user/:token/index', [
     body("token").notEmpty()
 ], UserController.index)
 
+router.get('/user/:token/indexfull', [
+    body("token").notEmpty()
+], UserController.indexfull)
+
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),
     body("email").isEmail().isLength({min: 2, max: 64}),
