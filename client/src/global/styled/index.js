@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         --clr-black-100: rgb(0 0 0);
         --clr-black-80: rgb(28 30 33);
         --clr-black-60: rgb(68 73 80);
+        --clr-black-40: #9c9c9c;
         --clr-black-20: #dbdbdb;
 
         /* text */

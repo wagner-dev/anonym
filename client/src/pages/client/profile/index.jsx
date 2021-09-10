@@ -5,12 +5,13 @@ import {
     ProfileBody
 } from './styled/index'
 
-export default function ProfileComponent({ user }){
+export default function ProfileComponent({ user, talk }){
+    
     return(
         <Body>
             <ProfileBody>
                 <Profile user={user} />
-                <Post posts={user.posts ? user.posts : []} />
+                <Post talks={talk ? talk : []} />
             </ProfileBody>
         </Body>
     )

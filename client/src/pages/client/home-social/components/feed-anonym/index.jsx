@@ -9,7 +9,7 @@ export default function FeedComponent(){
     return (
         <Body>
             <Anonym>
-                <img src={Load}/>
+                <img alt="carregando..." src={Load}/>
                 <span>Você está no modo anônimo</span>
             </Anonym>
             <Login>

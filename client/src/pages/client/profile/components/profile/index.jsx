@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+
 import {
     Body,
     Profile,
@@ -7,6 +7,7 @@ import {
     User,
     Data,
     Bio,
+    Buttons,
     Load
 } from './styled/index'
 import ImageIcon from '../../../../../assets/img/global/profile/index.jpg'
@@ -26,23 +27,20 @@ export default function ProfileComponent({ user }) {
                             ?
                             <>
                                 <User>
-                                    <div>
+                                    <div >
                                         <span>{user.username}</span>
-                                    </div>
-                                    <div>
-                                        <a href='/perfil/edit'><input type="submit" value="Editar" /></a>
                                     </div>
                                 </User>
                                 <Data>
-                                    <div>
-                                        <span>0</span>
+                                    <div title={user.talksCount}>
+                                        <span title={user.talksCount}>{user.talksCount}</span>
                                         <span>talk</span>
                                     </div>
-                                    <div>
+                                    <div title={user.followers}>
                                         <span>{user.followers}</span>
                                         <span>seguidore(s)</span>
                                     </div>
-                                    <div>
+                                    <div title={user.followers}>
                                         <span>{user.followers}</span>
                                         <span>seguindo</span>
                                     </div>
@@ -50,6 +48,14 @@ export default function ProfileComponent({ user }) {
                                 <Bio>
                                     <span>{user.desc}</span>
                                 </Bio>
+                                <Buttons>
+                                    <div>
+                                        <a href='/perfil/talks'><input type="submit" value="Talks" /></a>
+                                    </div>
+                                    <div>
+                                        <a href='/perfil/edit'><input type="submit" value="Editar" /></a>
+                                    </div>
+                                </Buttons>
                             </>
                             :
                             <Load>

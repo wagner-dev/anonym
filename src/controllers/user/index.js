@@ -4,11 +4,18 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
-const Post = require('../../models/post/index')
+const Talk = require('../../models/talk/index')
 
 module.exports = {
     async indexall(req, res){
-        res.json(await Post.find({}))
+        // await User.findByIdAndUpdate('613180327c43ef1c83f92a22', 
+        // {desc: '👽 | 16y\n📚 | Técnico em informática 2/3'})
+        // await Talk.create({
+        //     toUserId: '613180327c43ef1c83f92a22',
+        //     body: 'Lanche favorito?',
+        //     ofUserId: '613a10404f03f87673a7dabd',
+        // })
+        res.json(await User.find({}))
     },
     async indexfull(req, res){
         const token = req.params.token
@@ -17,15 +24,16 @@ module.exports = {
             const user = await verifyToken(token)
             if(user){
                 User.findOne({_id: user._id}).then(async ({username, email, isAdmin, desc, followings, followers}) => {
-                    const posts = await Post.find({userId: user._id}, {userId: 0, "comments._id": 0, "comments.subComments._id": 0})
-                                            .populate('comments.userId', {username: 1, isAdmin: 1, _id: 0})
-                                            .populate('comments.subComments.userId', {username: 1, isAdmin: 1, _id: 0})
-                    const postsFormated = posts.map(({likes, saved, body, comments, createdAt, _id}) => {return {_id, likes: likes.length, saved: saved.length, body, comments, createdAt }})
+                    const talks = await Talk.find({toUserId: user._id, response: {$size: 1}})
+                                            .sort({_id: -1})
+                                            .populate('toUserId', {username: 1, _id:0})
+                                            // .populate('ofUserId', {username: 1, _id: 0})
                     if(username){
                         res.json({"user": {
                             followers :followers.length,
                             followings: followings.length,
-                            posts: postsFormated,
+                            talksCount: talks.length,
+                            talks: talks,
                             username, email, isAdmin, desc,
                         }, status: 200})
                     }
@@ -48,7 +56,7 @@ module.exports = {
         if(!errors.length){
             const user = await verifyToken(token)
             if(user){
-                User.findOne({_id: user._id}).then(async ({username, email, isAdmin, desc}) => {
+                User.findOne({_id: user._id}).then(async ({username, email}) => {
                     if(username){
                         res.json({"user": {
                             username,
