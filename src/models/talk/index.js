@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const ResponseSchema = mongoose.Schema({
     body: {
         type: String,
-        max: 120,
+        max: 420,
         required: true
     }
 }, {
@@ -16,14 +16,9 @@ const TalkSchema = mongoose.Schema({
         ref: 'user',
         required: true
     },
-    ofUserId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
-    },
     body: {
         type: String,
-        max: 120,
+        max: 420,
         required: true
     },
     response: [ ResponseSchema ]

@@ -13,7 +13,8 @@ import {
     BodyTalk,
     AskTalk,
     ResponseTalk,
-    Load
+    Load,
+    LikeTalkBody
 } from './styled/index'
 
 import EmptyIcon from '../../../../../assets/svg/pages/profile/empty/index.svg'
@@ -34,7 +35,7 @@ export default function PostComponent({ talks }){
                         {talks.map((item, key) => {
                             const time = formatRelative(parseISO(item.createdAt), (new Date()), {locale: pt})
                             return (
-                                <Talk key={key} id={item.response[0]._id}>
+                                <Talk key={key} id={item._id}>
                                     <StartTalk>
                                             <ProfileTalk>
                                                 <ProfileImageTalk>
@@ -56,7 +57,7 @@ export default function PostComponent({ talks }){
                                             <span>{item.body}</span>
                                         </AskTalk>
                                         <ResponseTalk>
-                                            {item.response.map(item => <span id={item._id} key={item._id}>{item.body}</span>)}
+                                            {item.response.map((item, key) => <span id={item._id} key={key}>{item.body}</span>)}
                                         </ResponseTalk>
                                     </BodyTalk>
                                 </Talk>

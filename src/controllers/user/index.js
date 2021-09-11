@@ -15,20 +15,21 @@ module.exports = {
         //     body: 'Lanche favorito?',
         //     ofUserId: '613a10404f03f87673a7dabd',
         // })
-        res.json(await User.find({}))
+        res.json(await Talk.find({}))
     },
     async indexfull(req, res){
-        const token = req.params.token
-        const errors = validationResult(req)
-        if(!errors.length){
+        const { token } = req.params
+
+        if(token){
             const user = await verifyToken(token)
             if(user){
-                User.findOne({_id: user._id}).then(async ({username, email, isAdmin, desc, followings, followers}) => {
-                    const talks = await Talk.find({toUserId: user._id, response: {$size: 1}})
-                                            .sort({_id: -1})
-                                            .populate('toUserId', {username: 1, _id:0})
-                                            // .populate('ofUserId', {username: 1, _id: 0})
-                    if(username){
+                User.findOne({_id: user._id}).then(async (user) => {
+                    if(user){
+                        const { username, email, isAdmin, desc, followings, followers } = user
+                        const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
+                                                {ofUserId: 0, _id: 0, 'response.updatedAt': 0,'response.createdAt': 0,updatedAt: 0})
+                                                .sort({_id: -1})
+                                                .populate('toUserId', {username: 1, _id:0})
                         res.json({"user": {
                             followers :followers.length,
                             followings: followings.length,
@@ -51,9 +52,9 @@ module.exports = {
         }
     },
     async index(req, res){
-        const token = req.params.token
-        const errors = validationResult(req)
-        if(!errors.length){
+        const { token } = req.params
+
+        if(token){
             const user = await verifyToken(token)
             if(user){
                 User.findOne({_id: user._id}).then(async ({username, email}) => {
@@ -166,5 +167,51 @@ module.exports = {
         else{
             res.json({message: "Campo(s) inválido(s)", status: 422, login: false})
         }
+    },
+    async indexUserFull(req, res){
+        const { username } = req.params
+
+        if(username){
+
+            User.findOne({username}).then(async (user) => {
+                if(user){
+                    const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
+                                            {ofUserId: 0, 'response._id': 0, 'response.updatedAt': 0,'response.createdAt': 0,updatedAt: 0})
+                                            .sort({_id: -1})
+                                            .populate('toUserId', {username: 1, _id:0})
+                    res.json({"user": {
+                        followers: user.followers.length,
+                        followings: user.followings.length,
+                        talksCount: talks.length,
+                        talks: talks,
+                        username: user.username, 
+                        desc: user.desc,
+                    }, status: 200})
+                }
+                else{
+                    res.json({message: "ok", status: 401})
+                }
+            })
+        }
+        else{
+            res.json({message: "ok", status: 401})
+        }
+    },
+    async follow(req, res) {
+        const { token, username } = req.body
+        const { errors } = validationResult(req)
+
+        try{
+            if(!errors.length){
+
+            }   
+            else{
+                res.json({status: 422, message: 'Dados inválidos'})
+            }
+        }
+        catch{
+            res.json({status: 500, message: 'Ocorreu um erro'})
+        }
     }
+
 }

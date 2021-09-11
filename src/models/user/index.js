@@ -2,8 +2,27 @@ const mongoose = require('mongoose')
 
 const followersSchema = mongoose.Schema({
     UserId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
         required: true
+    },
+    isWarned: {
+        type: Boolean,
+        default: false
+    }
+},{
+    timestamps: true
+})
+
+const followingsSchema = mongoose.Schema({
+    UserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+    isWarned: {
+        type: Boolean,
+        default: false
     }
 },{
     timestamps: true
@@ -30,20 +49,28 @@ const UserSchema = mongoose.Schema({
         required: true,
         type: String
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
     desc: {
         type: String,
         max: 80,
         default: "Oi! Estou usando o Anonym." 
     },
     followers: [ followersSchema ],
-    followings: {
-        type: Array,
-        default: []
-    }
+    followings: [ followingsSchema ],
+    
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isPrivate: {
+        type: Boolean,
+        default: false
+    },
+    link_instagram: {
+        type: String,
+    },
+    link_yt: {
+        type: String,
+    },
 },{
     timestamps: true
 })

@@ -3,10 +3,10 @@ import api from '../api/index'
 import { getPersist } from '../persist/index'
 import { Route } from 'react-router-dom'
 
-const myContext = createContext({})
+const myContext = createContext()
 
-export const IdentifyUser = ({component: Component}, ...rest) => {
-
+export const IdentifyUser = ({component: Component, ...rest}) => {
+    
     const [ user, setUser ] = useState({})
     
     useEffect(() => {
@@ -23,12 +23,8 @@ export const IdentifyUser = ({component: Component}, ...rest) => {
         }
 
     }, [])
-
-    return(
-        <myContext.Provider
-        value={{user, setUser}}>
-            <Route {...rest} render={(props) => <Component {...props} />}/>
-        </myContext.Provider>
+return(
+        <Route {...rest} render={(props) => <myContext.Provider value={{user, setUser}} > <Component {...props}/> </myContext.Provider>}/>
     )
 }
 

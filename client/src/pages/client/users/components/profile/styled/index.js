@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Body = styled.section`
+export const Body = styled.article`
     width: 100%;
     /* height: 60vh; */
     /* background: red; */
@@ -135,5 +135,26 @@ export const Load = styled.div`
         100%{
             transform: rotate(360deg);
         }
+    }
+`
+export const Social = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div{
+        padding: .5rem .2rem;
+        background: #f9f9f9;
+        margin: 0rem .3rem;
+        display: flex;
+        border: 1px solid var(--clr-black-20);
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 4px;
+        svg{
+            width: 100%;
+            height: 100%;
+        }    
     }
 `

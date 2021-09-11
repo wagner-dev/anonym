@@ -1,4 +1,4 @@
-import { Switch, BrowserRouter} from 'react-router-dom'
+import { Switch, BrowserRouter, Route} from 'react-router-dom'
 
 
 // client
@@ -9,6 +9,7 @@ import { Switch, BrowserRouter} from 'react-router-dom'
     import CreateAccount from '../../pages/client/create-account/main'
     import HomeSocial from '../../pages/client/home-social/main'
     import Profile from '../../pages/client/profile/main'
+    import Users from '../../pages/client/users/main'
     // private
 
 export default function Router() {
@@ -21,6 +22,7 @@ export default function Router() {
                     <IdentifyUser exact path="/criar-conta" component={CreateAccount} />
                     <IdentifyUser exact path="/home" component={HomeSocial} />
                     <IdentifyUser exact path="/perfil" component={Profile} />
+                    <IdentifyUser exact path="/user/:username" component={Users} />
                     {/* private */}
 
             </Switch>
