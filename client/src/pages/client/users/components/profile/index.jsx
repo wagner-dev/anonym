@@ -14,7 +14,7 @@ import {
 import ImageIcon from '../../../../../assets/img/global/profile/index.jpg'
 import LoadIcon from '../../../../../assets/svg/global/load/index.svg'
 
-export default function ProfileComponent({ user }) {
+export default function ProfileComponent({ user, controlFollows, i_user }) {
 
     return(
         <Body>
@@ -41,18 +41,25 @@ export default function ProfileComponent({ user }) {
                                         <span>{user.followers}</span>
                                         <span>seguidore(s)</span>
                                     </div>
-                                    <div title={user.followers}>
-                                        <span>{user.followers}</span>
+                                    <div title={user.followings}>
+                                        <span>{user.followings}</span>
                                         <span>seguindo</span>
                                     </div>
                                 </Data>
                                 <Bio>
                                     <span>{user.desc}</span>
                                 </Bio>
-                                <Buttons>
-                                    <div>
-                                        <input type="submit" value="Seguir" />
-                                    </div>
+                                <Buttons following={!user.i_follow && user.i_follow_back === null ? false : (user.i_follow_back === false ? false : true)}>
+                                    {i_user.isAnonymous ? 
+                                        <a href="/login">
+                                            <input onClick={controlFollows} type="submit" value={!user.i_follow && user.i_follow_back === null ? 'Seguir' : (user.i_follow_back === false ? 'Seguir de volta' : 'Parar de seguir')} />
+                                        </a>
+                                    :
+                                        <div>
+                                            <input onClick={controlFollows} type="submit" value={!user.i_follow && user.i_follow_back === null ? 'Seguir' : (user.i_follow_back === false ? 'Seguir de volta' : 'Parar de seguir')} />
+                                        </div>
+                                    }
+                                    
                                     
                                     {user.link_yt && user.link_instagram ?
                                         <Social>

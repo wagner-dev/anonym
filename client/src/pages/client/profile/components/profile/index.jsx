@@ -40,8 +40,8 @@ export default function ProfileComponent({ user }) {
                                         <span>{user.followers}</span>
                                         <span>seguidore(s)</span>
                                     </div>
-                                    <div title={user.followers}>
-                                        <span>{user.followers}</span>
+                                    <div title={user.followings}>
+                                        <span>{user.followings}</span>
                                         <span>seguindo</span>
                                     </div>
                                 </Data>

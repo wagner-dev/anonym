@@ -6,9 +6,10 @@ import {
     Body,
     ProfileBody
 } from './styled/index'
+import { getPersist } from '../../../services/persist/index'
 import api from '../../../services/api/index'
 
-export default function ProfileComponent({ user, talk }){
+export default function ProfileComponent({ user, talk, update, i_user }){
     
     const [ msg, setMsg ] = useState('')
     const [ alert, setAlert ] = useState({type: 'err', msg: ''})
@@ -42,10 +43,25 @@ export default function ProfileComponent({ user, talk }){
         }
     }
 
+    async function controlFollows(){
+        const token = getPersist() ? getPersist() : 'false'
+
+        if(user.i_follow) await unfollow({token, username: user.username})
+        else await follow({token, username: user.username})
+
+        update()
+    }
+    async function follow(data){
+        await api.post('/user/follow', data)
+    }
+    async function unfollow(data){
+        await api.post('/user/unfollow', data)
+    }
+
     return(
         <Body>
             <ProfileBody>
-                <Profile user={user} />
+                <Profile user={user} controlFollows={controlFollows} i_user={i_user} />
                 <SendTalk user={user} msg={msg} setMsg={(e) => setMsg(e)} validation={validation} alert={alert} />
                 <Post talks={talk ? talk : []} />
             </ProfileBody>

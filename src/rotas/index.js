@@ -5,7 +5,7 @@ const { body } = require('express-validator')
 
 router.get('/user/index', UserController.indexall)
 
-router.get('/user/:username/data-user', UserController.indexUserFull)
+router.get('/user/:username/:token/data-user', UserController.indexUserFull)
 
 router.get('/user/:token/index', UserController.index)
 
@@ -13,23 +13,31 @@ router.get('/user/:token/indexfull', UserController.indexfull)
 
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),
-    body("email").isEmail().isLength({min: 2, max: 64}),
+    body("name").isLength({min: 2, max: 64}),
     body("password").isLength({min: 8, max: 64}),
+    // body("email").isEmail().isLength({min: 2, max: 64}),
 ],
  UserController.check)
  
  router.post('/user/create', [
     body("username").isLength({min: 2, max: 64}),
-    body("email").isEmail().isLength({min: 2, max: 64}),
+    body("name").isLength({min: 2, max: 64}),
+    // body("email").isEmail().isLength({min: 2, max: 64}),
     body("password").isLength({min: 8, max: 64}),
 ],
  UserController.create)
 
- router.post('/user/follow', [
+router.post('/user/follow', [
     body("username").notEmpty(),
     body("token").notEmpty()
  ],
- UserController.follow)
+UserController.follow)
+
+router.post('/user/unfollow', [
+    body("username").notEmpty(),
+    body("token").notEmpty()
+ ],
+ UserController.unfollow)
 
 
 //  talks

@@ -96,10 +96,16 @@ export const Buttons = styled.div`
     margin: .5rem 0rem 0rem 0rem;
     display: flex;
     justify-content: space-between;
-    div:first-child{
+    div:first-child, a:first-child{
+        width: 45%;
         input{
-            background: var(--clr-primary-100);
-            color: #fff;
+            padding: .5rem 1rem;
+            font-size: var(--text-80);
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            background: ${props => props.following ? 'none' : 'var(--clr-primary-100)'};
+            color: ${props => props.following ? 'var(--clr-primary-100)' : '#fff'};
             border: 1px solid var(--clr-primary-100);
         }
     }

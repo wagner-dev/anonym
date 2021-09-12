@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator')
 module.exports = {
     async create(req, res) {
         const { username, body } = req.body
-        const errors = validationResult(req)
+        const { errors } = validationResult(req)
 
         try{
             if(!errors.length){
