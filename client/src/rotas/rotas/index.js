@@ -10,6 +10,7 @@ import { Switch, BrowserRouter, Route} from 'react-router-dom'
     import HomeSocial from '../../pages/client/home-social/main'
     import Profile from '../../pages/client/profile/main'
     import Users from '../../pages/client/users/main'
+    import Talks from '../../pages/client/talks/main'
     // private
 
 export default function Router() {
@@ -23,6 +24,7 @@ export default function Router() {
                     <IdentifyUser exact path="/home" component={HomeSocial} />
                     <IdentifyUser exact path="/perfil" component={Profile} />
                     <IdentifyUser exact path="/user/:username" component={Users} />
+                    <IdentifyUser exact path="/perfil/talks" component={Talks} />
                     {/* private */}
 
             </Switch>

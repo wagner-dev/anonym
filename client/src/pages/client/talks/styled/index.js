@@ -1,29 +1,13 @@
 import styled from 'styled-components'
 
-export const Body = styled.div`
+export const Body = styled.section`
     width: 100%;
     margin: 6rem 0rem 2rem 0rem;
-
+    
     @media only screen and (max-width: 620px) {
         margin: 4rem 0rem 2rem 0rem;
     }
 `
-export const ProfileBody = styled.section`
-    width: 60%;
-    /* height: 60vh; */
-    margin: 0rem auto;
-    box-shadow: 0px 0px 10px 5px #f1f1f1;
-    border-radius: 8px;
-
-    @media only screen and (max-width: 920px) {
-        width: 80%;
-    }
-    @media only screen and (max-width: 620px) {
-        box-shadow: none;
-        width: 100%;
-    }
-`
-
 export const NotFound = styled.section`
     width: 100%;
     display: flex;

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Body = styled.section`
+export const Body = styled.article`
     width: 100%;
     /* height: 60vh; */
     /* background: red; */

@@ -41,7 +41,7 @@ router.post('/user/unfollow', [
 
 
 //  talks
-
+router.get('/talk/:token/index', TalkController.index)
 router.post('/talk/create', [
     body('username').notEmpty(),
     body('body').isLength({min: 1, max: 420})

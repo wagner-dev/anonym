@@ -1,6 +1,7 @@
 const User = require('../../models/user/index')
 const Talk = require('../../models/talk/index')
 const { validationResult } = require('express-validator')
+const { verifyToken } = require('../../services/auth/index')
 
 module.exports = {
     async create(req, res) {
@@ -30,6 +31,26 @@ module.exports = {
         }
         catch{
             res.json({status: 500, message: 'Ocorreu um erro'})
+        }
+    },
+    async index(req, res){
+        const { token } = req.params
+        const page = req.query.limit
+
+        if(token && page){
+            const ofUser = verifyToken(token)
+            if(ofUser){
+                const limit = Number.parseInt(page, 10)
+                const talksCount = await Talk.find({toUserId: ofUser._id}).countDocuments()
+                const talks = await Talk.find({toUserId: ofUser._id, response: {$size: 0}}, {body: 1, createdAt: 1}).limit(10 * limit)
+                res.json({status: 200, message: 'ok',talks, talksCount})
+            }
+            else{
+                res.json({message: 'Não autorizado', status: 401})
+            }
+        }
+        else{
+            res.json({message: 'Não autorizado', status: 401})
         }
     }
 }
