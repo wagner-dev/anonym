@@ -6,6 +6,7 @@ export const Body = styled.article`
     justify-content: center;
 `
 export const Post = styled.div`
+    width: 100%;
     padding: 0rem 1rem;
 
     @media only screen and (max-width: 620px){

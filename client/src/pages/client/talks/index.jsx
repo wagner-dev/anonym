@@ -11,7 +11,7 @@ export default function TalkComponent({ talks, load, setLimit, talksCount}){
             talks={talks}
             load={load}
             setLimit={setLimit}
-            talksCount={talksCount} />
+            talksCount={talksCount}/>
         </Body>
     )
 }

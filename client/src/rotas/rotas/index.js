@@ -11,6 +11,7 @@ import { Switch, BrowserRouter, Route} from 'react-router-dom'
     import Profile from '../../pages/client/profile/main'
     import Users from '../../pages/client/users/main'
     import Talks from '../../pages/client/talks/main'
+    import TalksResponse from '../../pages/client/talk-response/main'
     // private
 
 export default function Router() {
@@ -25,6 +26,8 @@ export default function Router() {
                     <IdentifyUser exact path="/perfil" component={Profile} />
                     <IdentifyUser exact path="/user/:username" component={Users} />
                     <IdentifyUser exact path="/perfil/talks" component={Talks} />
+                    <IdentifyUser exact path="/perfil/talks/responder/:_id" component={TalksResponse} />
+
                     {/* private */}
 
             </Switch>

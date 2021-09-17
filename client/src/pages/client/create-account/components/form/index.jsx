@@ -85,7 +85,7 @@ export default function Data({form, submit, RequestLogin, errors, alert}){
                     </div>
                 </Password>
                 <Button>
-                    <input type="submit" value="Entrar" />
+                    <input type="submit" value="Criar conta" />
                 </Button>
                 <Link>
                     <a href="/login">Login?</a>

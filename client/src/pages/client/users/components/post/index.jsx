@@ -33,7 +33,7 @@ export default function PostComponent({ talks }){
                     ? 
                     <Talks>
                         {talks.map((item, key) => {
-                            const time = formatRelative(parseISO(item.createdAt), (new Date()), {locale: pt})
+                            const time = formatRelative(parseISO(item.response[0].createdAt), (new Date()), {locale: pt})
                             return (
                                 <Talk key={key} id={item._id}>
                                     <StartTalk>

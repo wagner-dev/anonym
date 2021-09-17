@@ -29,9 +29,9 @@ module.exports = {
                     if(user){
                         const { username, email, isAdmin, desc, followings, followers } = user
                         const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
-                                                {ofUserId: 0, _id: 0, 'response.updatedAt': 0,'response.createdAt': 0,updatedAt: 0})
-                                                .sort({_id: -1})
+                                                {ofUserId: 0, _id: 0, 'response.updatedAt': 0,updatedAt: 0, createdAt: 0})
                                                 .populate('toUserId', {username: 1, _id:0})
+                                                .sort({_id: 1})
                         res.json({"user": {
                             followers :followers.length,
                             followings: followings.length,
@@ -129,10 +129,8 @@ module.exports = {
     },
     async check(req, res) {
         const { username, email, password } = req.body
-
         const { errors } = validationResult(req)
         const errorsUsername = username.match(/[^a-z0-9-_.]/img)
-        
         if(!errors.length){
             if(!errorsUsername){
                 const account = await User.findOne({username})
@@ -182,9 +180,9 @@ module.exports = {
                     const i_follow = ofUser ? await User.findOne({_id: user._id, 'followers.UserId': ofUser._id}) : false
 
                     const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
-                                            {ofUserId: 0, 'response._id': 0, 'response.updatedAt': 0,'response.createdAt': 0,updatedAt: 0})
-                                            .sort({_id: -1})
+                                            {ofUserId: 0, 'response._id': 0, 'response.updatedAt': 0, createdAt: 0,updatedAt: 0})
                                             .populate('toUserId', {username: 1, _id:0})
+                                            .sort({_id: 1})
                     res.json({"user": {
                         followers: user.followers.length,
                         followings: user.followings.length,

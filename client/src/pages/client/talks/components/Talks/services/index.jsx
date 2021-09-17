@@ -11,7 +11,7 @@ export const LoadMore = ({ setLimit, talksCount, talksLimit}) => {
         const options = {
             root: null,
             rootMargin: '0px',
-            threshold: 1.0
+            threshold: 0.1
         }
         const observer = new IntersectionObserver(([entries]) => {
             if(entries.isIntersecting){
@@ -36,7 +36,7 @@ export const LoadMore = ({ setLimit, talksCount, talksLimit}) => {
     return <>
     <LoadMoreStyle ref={rootRef} >
     {loadedAll ? 
-        <span>Todos items carregandos</span>
+        <span>Todos items carregandos...</span>
     : 
         <img src={LoadIcon} alt="carregando..." />
     }

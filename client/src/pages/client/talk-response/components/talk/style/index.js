@@ -4,9 +4,11 @@ import styled from 'styled-components'
 export const Body = styled.article`
     width: 60%;
     margin: 0rem auto;
+    padding: 0rem 2rem;
     box-shadow: 0px 0px 10px 5px #f1f1f1;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
 
     
     @media only screen and (max-width: 920px) {
@@ -16,38 +18,43 @@ export const Body = styled.article`
     @media only screen and (max-width: 620px) {
         width: 100%;
         box-shadow: none;
+        padding: 0rem;
+    }
+`
+export const Title = styled.div`
+    width: 100%;
+    margin: 1rem auto 0rem auto;
+    border-left: 5px solid var(--clr-primary-100);
+    
+    h2{
+        color: var(--clr-primary-100);
+        white-space: nowrap;
+        font-weight: 400;
+        font-size: var(--text-130);
+        padding: 0rem 0rem 0rem 0.2rem;
+    }
+
+
+    @media only screen and (max-width: 620px){
+        h2{
+            font-size: var(--text-120);
+        }
+    }
+`
+export const Alert = styled.div`
+    width: 100%;
+    margin: -.4rem auto 0rem auto;
+    span{
+        font-size: var(--text-70);
+        color: ${props => props.type === 'success' ? 'green' : 'red'};
     }
 `
 export const Empty = styled.div`
-    width: 100%;
-    padding: 2rem 0rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    img{
-        width: 50%;
-    }
-    span{
-        margin: .5rem 0rem 0rem 0rem;
-        font-size: var(--text-90);
-    }
-
-
-
-
-
-    @media only screen and (max-width: 620px) {
-        img{
-            width: 90%;
-        }
-        span{
-            font-size: var(--text-80);
-        }
-    }
+    
 `
 export const TalkBody = styled.div`
     width: 100%;
-    padding: 2rem 0rem;
+    padding: .5rem 0rem 1rem 0rem;
 `
 export const Load = styled.div`
     display: flex;
@@ -70,17 +77,13 @@ export const Load = styled.div`
 `
 
 export const Talk = styled.div`
-    padding: .2rem;
-    width: 90%;
+    padding: .2rem 1rem;
+    width: 100%;
     margin: 1rem auto;
     border: 1px solid #f1f1f1;
     /* padding: rem; */
     border-radius: 5px;
     height: auto !important;
-
-    @media only screen and (max-width: 620px){
-        width: 100%;
-    } 
 `
 
 
@@ -104,10 +107,10 @@ export const AskTalk = styled.div`
     }
 `
 export const ResponseTalk = styled.div`
-    width: 95%;
-    margin: 1rem auto .5rem auto;
-
-    input{
+    width: 100%;
+    margin: 1rem auto 0 auto;
+    
+    textarea{
         padding: .6rem;
         width: 100%;
         border: none;
@@ -116,40 +119,25 @@ export const ResponseTalk = styled.div`
         outline: none;
         max-width: 100%;
         min-width: 100%;
-        height: 7vh;
-        resize: none;
-        cursor: pointer;
+        min-height: 7vh;
+        height: 25vh;
+        max-height: 25vh;
         transition: .5s;
-        text-align: left;
     }
 `
-
-
-export const LoadMoreStyle = styled.div`
+export const ButtonSend = styled.div`
+    /* display: none; */
+    margin: .2rem 0rem .4rem 0rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
 
-    span{
-        font-size: var(--text-90);
-    }
-
-    img{
-        width: 25px;
-        height: 25px;
-        animation: rotateXY .6s linear infinite;
-    }
-
-
-    @keyframes rotateXY {
-        100%{
-            transform: rotate(360deg);
-        }
-    }
-
-    @media only screen and (max-width: 620px) {
-        span{
-            font-size: var(--text-80);
-        }
+    input{
+        border-radius: 4px;
+        outline: none;
+        border: none;
+        background: var(--clr-primary-100);
+        color: #fff;
+        font-size: var(--text-80);
+        padding: .5rem 1rem;
+        cursor: pointer;
     }
 `

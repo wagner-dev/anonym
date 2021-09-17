@@ -19,6 +19,7 @@ export default function ProfileComponent({ user, talk, update, i_user }){
         const { data, status } = await api.post(`/talk/create`, {body: msg, username: user.username})
 
         if(status === 200 && data.status === 200){
+            setMsg('')
             setAlert({type: 'success', msg: data.message})
         }
         else{
@@ -27,9 +28,9 @@ export default function ProfileComponent({ user, talk, update, i_user }){
     }
 
     function validation(){
+        setAlert({type: 'err', msg: ''})
         if(msg.length <= 420){
             // reset alerts
-            setAlert({type: 'err', msg: ''})
             if(msg.length > 0){
                 RequestSendMsg()
             }

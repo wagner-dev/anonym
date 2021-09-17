@@ -2,28 +2,15 @@ import {
     Body,
     Empty,
     Load,
-    Talk,
-    BodyTalk,
-    AskTalk,
     TalkBody,
-    ResponseTalk,
-    ButtonSend
 } from './styled/index'
 import LoadIcon from '../../../../../assets/svg/global/load/index.svg'
-import { formatRelative, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR'
+import EmptyIcon from '../../../../../assets/svg/pages/talks/talks-empty/index.svg'
 import { LoadMore } from './services/index'
+import ListItems from './components/ListItems/index'
 
 export default function TalkComponent({ talks, load, setLimit, talksCount}){
-    function Enable(e){
-        // element's
-        const textarea = e.target
-        textarea.style.height = '30vh'
-    }
-    function Disable(e) {
-        const textarea = e.target
-        textarea.style.height = '7vh'
-    }
+
     return(
         <Body>
                 {load ? 
@@ -34,34 +21,18 @@ export default function TalkComponent({ talks, load, setLimit, talksCount}){
             <>
                 {talks.length ? 
                     <TalkBody>
-                        {talks.map((item, key) => {
-
-                            const time = formatRelative(parseISO(item.createdAt), (new Date()), {locale: pt})
-
-                            return (
-                                <Talk key={key} id={item._id}>
-                                    <BodyTalk>
-                                        <AskTalk>
-                                            <span>{item.body}</span>
-                                        </AskTalk>
-                                        <ResponseTalk>
-                                            <textarea onBlur={Disable} onFocus={Enable} placeholder="Sua resposta">
-                                            </textarea>
-                                        </ResponseTalk>
-                                        <ButtonSend>
-                                            <input type="submit" value='Enviar' />
-                                        </ButtonSend>
-                                    </BodyTalk>
-                                </Talk>
-                            )
-                        })}
-
+                        <ListItems Response={Response} talks={talks} />
                         <LoadMore
                         talksLimit={talks.length}
                         setLimit={setLimit}
                         talksCount={talksCount} />
                     </TalkBody>
-                : <>vazio</>
+                : 
+                    <Empty>
+                        <img src={EmptyIcon} alt="Nenum talk :(" />
+                        <span>Nenhum talk :(</span>
+                        <span>Siga seus amigos para eles enviarem talks a você</span>
+                    </Empty>
                 }
             </>
             }

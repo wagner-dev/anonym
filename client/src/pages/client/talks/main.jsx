@@ -39,7 +39,7 @@ export default function TalkPage(){
             setUser({isAnonymous: true})
         }
     }
-
+    
     useEffect(() => {
         requestStart()
     }, [ limit ])
@@ -56,7 +56,7 @@ export default function TalkPage(){
             talks={talks.data}
             load={talks.load}
             setLimit={(e) => setLimit(e)}
-            talksCount={talks.talksCount} />
+            talksCount={talks.talksCount}/>
             }
         </>
     )
