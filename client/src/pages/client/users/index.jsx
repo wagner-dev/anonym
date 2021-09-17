@@ -9,7 +9,7 @@ import {
 import { getPersist } from '../../../services/persist/index'
 import api from '../../../services/api/index'
 
-export default function ProfileComponent({ user, talk, update, i_user }){
+export default function ProfileComponent({ user, talk, update, i_user, setLimit }){
     
     const [ msg, setMsg ] = useState('')
     const [ alert, setAlert ] = useState({type: 'err', msg: ''})
@@ -49,7 +49,7 @@ export default function ProfileComponent({ user, talk, update, i_user }){
 
         if(user.i_follow) await unfollow({token, username: user.username})
         else await follow({token, username: user.username})
-
+        
         update()
     }
     async function follow(data){
@@ -64,7 +64,7 @@ export default function ProfileComponent({ user, talk, update, i_user }){
             <ProfileBody>
                 <Profile user={user} controlFollows={controlFollows} i_user={i_user} />
                 <SendTalk user={user} msg={msg} setMsg={(e) => setMsg(e)} validation={validation} alert={alert} />
-                <Post talks={talk ? talk : []} />
+                <Post talks={talk} setLimit={setLimit} total={user.talksCount} />
             </ProfileBody>
         </Body>
     )

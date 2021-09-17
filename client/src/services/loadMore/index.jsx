@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { LoadMoreStyle } from '../styled/index'
-import LoadIcon from '../../../../../../assets/svg/global/load/index.svg'
+import { LoadMoreStyle } from './styled/index'
+import LoadIcon from '../../assets/svg/global/load/index.svg'
 
-export const LoadMore = ({ setLimit, talksCount, talksLimit}) => {
-    
+export default function LoadMore({ setLimit, total, realLimit}){
+
     const rootRef = useRef()
     const [loadedAll, setLoadedAll] = useState(false)
+
     
     useEffect(() => {
+
         const options = {
             root: null,
             rootMargin: '0px',
@@ -15,7 +17,8 @@ export const LoadMore = ({ setLimit, talksCount, talksLimit}) => {
         }
         const observer = new IntersectionObserver(([entries]) => {
             if(entries.isIntersecting){
-                if(talksLimit >= talksCount){
+                
+                if(realLimit >= total){
                     setLoadedAll(true)
                     observer.disconnect()
                 }
@@ -23,14 +26,16 @@ export const LoadMore = ({ setLimit, talksCount, talksLimit}) => {
                     setLimit(prev => prev+1)
                 }
             }
-
+    
         }, options)
         observer.observe(rootRef.current)
         
         return () => (
             observer.disconnect()
         )
-    }, [talksLimit])
+
+        // eslint-disable-next-line
+    }, [ realLimit ])
 
 
     return <>

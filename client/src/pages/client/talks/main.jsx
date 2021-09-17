@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback} from 'react'
 import {
     NotFound
 } from './styled/index'
@@ -9,6 +9,7 @@ import { getPersist } from '../../../services/persist/index'
 import { useUser } from '../../../services/identifyUser/index'
 
 export default function TalkPage(){
+    useEffect(() => { document.title = 'Seus talks - Anonym' })
 
     const { user, setUser } = useUser()
 
@@ -19,7 +20,7 @@ export default function TalkPage(){
     const [ limit, setLimit ] = useState(1)
 
 
-    async function requestStart(){
+    const requestStart = useCallback(async() => {
 
         const token = getPersist()
     
@@ -38,11 +39,11 @@ export default function TalkPage(){
         else{
             setUser({isAnonymous: true})
         }
-    }
-    
+    }, [ limit, setUser ])
+
     useEffect(() => {
         requestStart()
-    }, [ limit ])
+    }, [ requestStart ])
     return(
         <>
             <Menu border={true} />

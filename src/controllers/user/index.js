@@ -21,23 +21,26 @@ module.exports = {
     },
     async indexfull(req, res){
         const { token } = req.params
+        const { limit } = req.query
 
-        if(token){
+        if(token, limit){
             const user = await verifyToken(token)
             if(user){
+                const limitFormatted = Number.parseInt(limit, 10)
                 User.findOne({_id: user._id}).then(async (user) => {
                     if(user){
                         const { username, email, isAdmin, desc, followings, followers } = user
+                        const talksCount = await Talk.find({toUserId: user._id, response: {$size: 1}}, {_id: 1}).countDocuments()
                         const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
                                                 {ofUserId: 0, _id: 0, 'response.updatedAt': 0,updatedAt: 0, createdAt: 0})
                                                 .populate('toUserId', {username: 1, _id:0})
-                                                .sort({_id: 1})
+                                                .limit( 15 * limitFormatted)
+                                                .sort({'response._id': -1})
                         res.json({"user": {
                             followers :followers.length,
                             followings: followings.length,
-                            talksCount: talks.length,
                             talks: talks,
-                            username, email, isAdmin, desc,
+                            talksCount, username, email, isAdmin, desc,
                         }, status: 200})
                     }
                     else{
@@ -170,28 +173,30 @@ module.exports = {
     },
     async indexUserFull(req, res){
         const { username, token } = req.params
+        const { limit } = req.query
 
-        if(username){
+        if(username, limit){
+            const limitFormatted = Number.parseInt(limit, 10)
             const ofUser = token == 'false' ? false : verifyToken(token)
-
             User.findOne({username}).then(async (user) => {
                 if(user){
                     const is_follow_me = ofUser ? await User.findOne({_id: user._id, 'followings.UserId': ofUser._id}) : false
                     const i_follow = ofUser ? await User.findOne({_id: user._id, 'followers.UserId': ofUser._id}) : false
-
+                    const talksCount = await Talk.find({toUserId: user._id, response: {$size: 1}}, {_id: 0}).countDocuments()
                     const talks = await Talk.find({toUserId: user._id, response: {$size: 1}},
                                             {ofUserId: 0, 'response._id': 0, 'response.updatedAt': 0, createdAt: 0,updatedAt: 0})
                                             .populate('toUserId', {username: 1, _id:0})
-                                            .sort({_id: 1})
+                                            .limit( 15 * limitFormatted)
+                                            .sort({'response._id': -1})
                     res.json({"user": {
                         followers: user.followers.length,
                         followings: user.followings.length,
-                        talksCount: talks.length,
                         talks: talks,
                         username: user.username, 
                         i_follow: (i_follow ? true : false),
                         i_follow_back: is_follow_me && !i_follow ? false : null,
-                        desc: user.desc,
+                        desc: user.desc, 
+                        talksCount
                     }, status: 200})
                 }
                 else{

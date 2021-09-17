@@ -95,6 +95,8 @@ export const AskTalk = styled.div`
     margin: .4rem 0rem .4rem 2rem;
     padding: 0rem 0rem 0rem .6rem;
     border-left: 5px solid var(--clr-black-40);
+    overflow: hidden;
+    text-overflow: ellipsis;
     span{
         font-size: var(--text-100);
         color: var(--clr-black-60);

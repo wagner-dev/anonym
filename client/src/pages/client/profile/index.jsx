@@ -5,13 +5,12 @@ import {
     ProfileBody
 } from './styled/index'
 
-export default function ProfileComponent({ user, talk }){
-    
+export default function ProfileComponent({ user, talk, setLimit}){
     return(
         <Body>
             <ProfileBody>
                 <Profile user={user} />
-                <Post talks={talk ? talk : []} />
+                <Post talks={talk ? talk : []} setLimit={setLimit} total={user.talksCount} />
             </ProfileBody>
         </Body>
     )

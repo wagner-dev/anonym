@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {
     NotFound
 } from './styled/index'
@@ -6,17 +6,15 @@ import Menu from '../../../global/components/menu/main'
 import Talk from './index'
 import api from '../../../services/api/index'
 import { getPersist } from '../../../services/persist/index'
-import { useUser } from '../../../services/identifyUser/index'
 
 export default function TalkPage({match: {params}}){
-
-    const { user, setUser } = useUser()
+    useEffect(() => { document.title = 'Responder talk - Anonym' })
 
     const [talk, setTalk] = useState({
         load: true,
         data: []
     })
-
+    
     // msg
     const [response, setResponse] = useState('')
     // alert
@@ -25,33 +23,16 @@ export default function TalkPage({match: {params}}){
         type: 'err'
     })
 
-    async function requestStart(){
-
-        const token = getPersist()
-    
-        if(token){
-            const { data, status } = await api.get(`/talk/${token}/${params._id}/indexone`)
-            if(data.status === 200 && status === 200){
-                setTalk(data.talk ? {data: data.talk} : [])
-            }
-            else{
-                setTalk({isAnonymous: true})
-            }
-        }
-        else{
-            setTalk({isAnonymous: true})
-        }
-    }
     async function verifyResponse(){
         // reset
         setAlert({msg: '', type: 'err'})
-
+        
         if(response.length >= 1){
             // reset
             setAlert({msg: '', type: 'err'})
             if(response.length <= 420){
                 requestResponse({
-
+                    
                 })
                 setAlert({msg: '', type: 'err'})
             }
@@ -85,10 +66,28 @@ export default function TalkPage({match: {params}}){
             window.location = '/login'
         }
     }
+    
+    const requestStart = useCallback( async() => {
+
+        const token = getPersist()
+    
+        if(token){
+            const { data, status } = await api.get(`/talk/${token}/${params._id}/indexone`)
+            if(data.status === 200 && status === 200){
+                setTalk(data.talk ? {data: data.talk} : [])
+            }
+            else{
+                setTalk({isAnonymous: true})
+            }
+        }
+        else{
+            setTalk({isAnonymous: true})
+        }
+    }, [ params._id ])
 
     useEffect(() => {
         requestStart()
-    }, [])
+    }, [ requestStart ])
     return(
         <>
             <Menu border={true} />

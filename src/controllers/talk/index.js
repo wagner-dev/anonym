@@ -42,7 +42,9 @@ module.exports = {
             if(ofUser){
                 const limit = Number.parseInt(page, 10)
                 const talksCount = await Talk.find({toUserId: ofUser._id, response: {$size: 0}}).countDocuments()
-                const talks = await Talk.find({toUserId: ofUser._id, response: {$size: 0}}, {body: 1, createdAt: 1}).limit(15 * limit)
+                const talks = await Talk.find({toUserId: ofUser._id, response: {$size: 0}}, {body: 1, createdAt: 1})
+                                        .limit(15 * limit)
+                                        .sort({_id: -1})
                 res.json({status: 200, message: 'ok',talks, talksCount})
             }
             else{

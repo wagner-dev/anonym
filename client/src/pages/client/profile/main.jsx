@@ -1,6 +1,6 @@
+import { useEffect, useState, useCallback} from 'react'
 import Menu from '../../../global/components/menu/main'
 import { NotFound } from './styled/index'
-import { useEffect, useState } from 'react'
 import Profile from './index'
 import api from '../../../services/api/index'
 import { getPersist } from '../../../services/persist/index'
@@ -8,11 +8,15 @@ import { getPersist } from '../../../services/persist/index'
 export default function ProfilePage(){
     const [user, setUser] = useState({})
     const [talk, setTalk] = useState({load: true})
+    // page - limite de produtos por scroll ( limit * 15 )
+    const [limit, setLimit] = useState(1)
 
-    useEffect(() => {
+
+    const RequestStart = useCallback(async () =>{
+        
         const token = getPersist()
         if(token){
-            api.get(`/user/${token}/indexfull`).then(({ data, status }) => {
+            api.get(`/user/${token}/indexfull?limit=${limit}`).then(({ data, status }) => {
                 if(status === 200 && data.status === 200){
                     document.title = `${data.user.username ? data.user.username : 'Perfil'} - Anonym`
                     setUser(data.user ? data.user : {})
@@ -29,7 +33,11 @@ export default function ProfilePage(){
             document.title = 'Página não encontrada - Anonym'
             setUser({isAnonymous: true})
         }
-    }, [])
+    }, [ limit ])
+
+    useEffect(() => {
+        RequestStart()
+    }, [ RequestStart ])
 
     return(
         <>
@@ -40,7 +48,7 @@ export default function ProfilePage(){
                     <span>O link em que você clicou pode não estar funcionando, ou a página pode ter sido removida. <a href='/'>Voltar para o anonym</a></span>
                 </NotFound>
             :
-            <Profile user={user} talk={talk} />
+            <Profile user={user} talk={talk} setLimit={setLimit} />
             }
         </>
     )

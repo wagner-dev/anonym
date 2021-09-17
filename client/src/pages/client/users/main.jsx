@@ -1,6 +1,6 @@
+import { useEffect, useState, useCallback } from 'react'
 import Menu from '../../../global/components/menu/main'
 import { NotFound } from './styled/index'
-import { useEffect, useState } from 'react'
 import Profile from './index'
 import api from '../../../services/api/index'
 import { getPersist } from '../../../services/persist/index'
@@ -13,11 +13,13 @@ export default function ProfilePage({ match }){
     const [user, setUser] = useState({})
     const [talk, setTalk] = useState({load: true})
 
-    async function requestStart(){
+    const [limit, setLimit] = useState(1)
 
-        const token = getPersist()
+    const requestStart = useCallback(async() => {
 
-        api.get(`/user/${match.params.username}/${ (token || false) }/data-user`).then(({ data, status }) => {
+        const token = getPersist() ? getPersist() : false
+
+        api.get(`/user/${match.params.username}/${token}/data-user?limit=${limit}`).then(({ data, status }) => {
             if(status === 200 && data.status === 200){
                 document.title = `${data.user.username ? data.user.username : 'Perfil'} - Anonym`
                 setUser(data.user ? data.user : {})
@@ -29,11 +31,11 @@ export default function ProfilePage({ match }){
                 setUser({isAnonymous: true})
             }
         })
-    }
+    }, [limit, match.params.username])
 
     useEffect(() => {
         requestStart()
-    }, [match.params.username])
+    }, [requestStart])
 
     return(
         <>
@@ -44,7 +46,12 @@ export default function ProfilePage({ match }){
                     <span>O link em que você clicou pode não estar funcionando, ou a página pode ter sido removida. <a href='/home'>Voltar para o anonym</a></span>
                 </NotFound>
             :
-            <Profile user={user} talk={talk} update={requestStart} i_user={i_user} />
+            <Profile
+            user={user}
+            talk={talk}
+            update={requestStart}
+            i_user={i_user}
+            setLimit={setLimit} />
             }
         </>
     )

@@ -6,7 +6,7 @@ import {
 } from './styled/index'
 import LoadIcon from '../../../../../assets/svg/global/load/index.svg'
 import EmptyIcon from '../../../../../assets/svg/pages/talks/talks-empty/index.svg'
-import { LoadMore } from './services/index'
+import  LoadMore from '../../../../../services/loadMore/index'
 import ListItems from './components/ListItems/index'
 
 export default function TalkComponent({ talks, load, setLimit, talksCount}){
@@ -23,9 +23,10 @@ export default function TalkComponent({ talks, load, setLimit, talksCount}){
                     <TalkBody>
                         <ListItems Response={Response} talks={talks} />
                         <LoadMore
-                        talksLimit={talks.length}
+                        realLimit={talks.length}
                         setLimit={setLimit}
-                        talksCount={talksCount} />
+                        total={talksCount}
+                         />
                     </TalkBody>
                 : 
                     <Empty>

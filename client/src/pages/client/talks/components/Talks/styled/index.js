@@ -88,11 +88,15 @@ export const BodyTalk = styled.div`
 
 `
 export const AskTalk = styled.div`
+
     padding: .5rem 0rem;
     margin: .4rem 0rem .4rem 2rem;
     padding: 0rem 0rem 0rem .6rem;
     border-left: 5px solid var(--clr-black-40);
+    overflow: hidden;
+    text-overflow: ellipsis;
     span{
+        width: 100%;
         font-size: var(--text-100);
         color: var(--clr-black-60);
     }
@@ -121,35 +125,5 @@ export const ResponseTalk = styled.div`
         cursor: pointer;
         transition: .5s;
         text-align: left;
-    }
-`
-
-
-export const LoadMoreStyle = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
-    span{
-        font-size: var(--text-90);
-    }
-
-    img{
-        width: 25px;
-        height: 25px;
-        animation: rotateXY .6s linear infinite;
-    }
-
-
-    @keyframes rotateXY {
-        100%{
-            transform: rotate(360deg);
-        }
-    }
-
-    @media only screen and (max-width: 620px) {
-        span{
-            font-size: var(--text-80);
-        }
     }
 `
