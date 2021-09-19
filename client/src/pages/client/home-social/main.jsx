@@ -1,17 +1,58 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import HomeSocial from './index'
 import Menu from '../../../global/components/menu/main'
 import {
     GlobalStyle
 } from './styled/'
+import api from '../../../services/api/index'
+import { getPersist } from '../../../services/persist/index'
 
 export default function HomeSocialPage(){
-    useEffect(() => { document.title = 'Anonym - home'}, [])
+
+    const [ talks, setTalks ] = useState({
+        loading: true,
+        data: [],
+        meta: {
+            total: 0
+        }
+    })
+    // página - limit de produtos (scroll infinite)
+    const [ limit, setLimit ] = useState(1)
+
+    const RequestStart = useCallback(async () => {
+        const token = getPersist()  
+        if(token){
+            const { data, status } = await api.get(`/user/${token}/timeline?limit=${limit}`)
+            if(data.status === 200 && status === 200){
+                setTalks({
+                    data: data.talks, 
+                    meta: {
+                        total: data.talksCount
+                    }
+                })
+            }
+            else{
+
+            }
+        }
+    }, [ limit ])
+    
+    useEffect(() => { 
+        // title
+        document.title = 'Anonym - home'
+        
+        // request
+        RequestStart()
+    }, [ RequestStart ])
     return(
     <>
         <GlobalStyle />
         <Menu border={true} />
-        <HomeSocial />
+        <HomeSocial 
+        talks={talks.data}
+        total={talks.meta.total} 
+        setLimit={setLimit}
+        loading={talks.loading} />
     </>
     )
 }

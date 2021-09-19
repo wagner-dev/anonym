@@ -19,7 +19,7 @@ module.exports = {
         // await User.findOneAndUpdate({id: "613a10404f03f87673a7dabd"}, {$pull: {followers: {_id: "613cda61a4129cf19904bd21"}}})
         res.json(await User.find({}))
     },
-    async indexfull(req, res){
+    async AllDataProfile(req, res){
         const { token } = req.params
         const { limit } = req.query
 
@@ -112,12 +112,12 @@ module.exports = {
                     res.json({message: 'Email já existente', status: 422, create: false})
                 }
                 else{
-                    const passCript = await bcrypt.hash(password, 10, async (err, result) => {
+                    await bcrypt.hash(password, 10, async (err, result) => {
                         if(err){
                             res.json({message: 'Ocorreu um erro ao criptografar a senha', status: 422, create: false})
                         }
                         else{
-                            const newUser = await User.create({username, email, password: result})
+                            await User.create({username, email, password: result})
                             res.json({message: 'Conta criada com sucesso', status: 200, create: true})
                         }
                     })
@@ -171,7 +171,7 @@ module.exports = {
             res.json({message: "Campo(s) inválido(s)", status: 422, login: false})
         }
     },
-    async indexUserFull(req, res){
+    async allUserData(req, res){
         const { username, token } = req.params
         const { limit } = req.query
 
@@ -285,6 +285,38 @@ module.exports = {
         catch{
 
         }
+    },
+    async timeline(req, res) {
+        const { token } = req.params
+        const { limit } = req.query
+
+        try{
+            if(token){
+                const limitFormatted = Number.parseInt(limit, 10)
+                const ofUser = verifyToken(token)
+                if(ofUser){
+                    const user = await User.findOne({_id: ofUser._id}, {'followings.UserId': 1})
+                    const followings = user.followings.map(item => item.UserId)                       
+                    const talksCount = await Talk.find({toUserId: {$in: followings}, response: {$size: 1}}).countDocuments()
+                    const talks = await Talk.find({toUserId: {$in: followings}, response: {$size: 1}},
+                                                  {_id: 0, createdAt: 0, updatedAt: 0, 'response._id' : 0, 'response.updatedAt': 0})
+                                            .populate('toUserId', {username: 1, _id: 0})
+                                            .limit( 15 * limitFormatted )
+                                            .sort({'response.createdAt': -1})
+                    res.json({status: 200,message: 'ok', talks, talksCount})
+                }
+                else{
+                    res.json({message: 'Não autorizado', status: 401})
+                }
+            }
+            else{
+                res.json({message: 'Não autorizado', status: 401})
+            }
+        }
+        catch{
+            res.json({message: 'Ocorreu um erro', status: 500})
+        }
+
     }
 
 }

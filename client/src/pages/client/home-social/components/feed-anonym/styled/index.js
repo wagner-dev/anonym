@@ -9,6 +9,13 @@ export const Body = styled.article`
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
+
+    @media only screen and (max-width: 820px){
+        width: 100%;
+    }
+    @media only screen and (max-width: 620px){
+        box-shadow: none;
+    } 
 `
 export const Anonym = styled.div`
     margin: 0rem auto;
@@ -22,6 +29,12 @@ export const Anonym = styled.div`
     }
     img{
         width: 60%;
+    }
+
+    @media only screen and (max-width: 620px){
+        span{
+            font-size: var(--text-80);
+        }
     }
 `
 export const Login = styled.div`
@@ -53,4 +66,16 @@ export const Login = styled.div`
             font-size: var(--text-90);
         }
     }
+
+
+    @media only screen and (max-width: 820px){ a{ width: 30%; } }
+    @media only screen and (max-width: 620px){ 
+        a{
+            width: 35%;
+            input{
+                font-size: var(--text-80);
+            }    
+        } 
+    }
+    @media only screen and (max-width: 520px){ a{ width: 45%; } }
 `

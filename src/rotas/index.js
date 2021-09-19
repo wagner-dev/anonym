@@ -5,11 +5,11 @@ const { body } = require('express-validator')
 
 router.get('/user/index', UserController.indexall)
 
-router.get('/user/:username/:token/data-user', UserController.indexUserFull)
+router.get('/user/:username/:token/data-user', UserController.allUserData)
 
 router.get('/user/:token/index', UserController.index)
 
-router.get('/user/:token/indexfull', UserController.indexfull)
+router.get('/user/:token/indexfull', UserController.AllDataProfile)
 
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),
@@ -55,5 +55,10 @@ router.post('/talk/response/create', [
     body('_id').notEmpty(),
     body('body').isLength({min: 1, max: 420})
 ], TalkController.CreateResponse)
+
+
+// timeline
+
+router.get('/user/:token/timeline', UserController.timeline)
 
 module.exports = router

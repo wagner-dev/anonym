@@ -8,6 +8,9 @@ export const Body = styled.article`
     right: 10%;
     margin: 0rem 0rem 0rem 0rem;
 
+    @media only screen and (max-width: 820px){
+        display: none;
+    }
 `
 export const Profile = styled.a`
     display: flex;

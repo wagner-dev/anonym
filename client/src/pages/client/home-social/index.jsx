@@ -6,7 +6,7 @@ import FeedAnonym from './components/feed-anonym/index'
 import {
     Body
 } from './styled/'
-export default function HomeSocialComponent(){
+export default function HomeSocialComponent({ setLimit, talks, total, loading }){
     const { user } = useUser()
     return(
         <>
@@ -15,7 +15,7 @@ export default function HomeSocialComponent(){
                 <>
                     {user.isAnonymous
                     ? <FeedAnonym />
-                    : <Feed />
+                    : <Feed total={total} setLimit={setLimit} talks={talks} loading={loading} />
                     }
                 </>
                 : null
