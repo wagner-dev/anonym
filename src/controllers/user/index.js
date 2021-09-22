@@ -5,19 +5,12 @@ const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
 const Talk = require('../../models/talk/index')
+const nodemailer = require('nodemailer')
+
 
 module.exports = {
     async indexall(req, res){
-        // await User.findByIdAndUpdate('613180327c43ef1c83f92a22', 
-        // {desc: '👽 | 16y\n📚 | Técnico em informática 2/3'})
-        // await Talk.create({
-        //     toUserId: '613180327c43ef1c83f92a22',
-        //     body: 'Lanche favorito?',
-        //     ofUserId: '613a10404f03f87673a7dabd',
-        // })
-        // await User.findByIdAndUpdate("613a10404f03f87673a7dabd", {$push: {followers: {UserId: '613180327c43ef1c83f92a22'}}})
-        // await User.findOneAndUpdate({id: "613a10404f03f87673a7dabd"}, {$pull: {followers: {_id: "613cda61a4129cf19904bd21"}}})
-        res.json(await User.find({}))
+        
     },
     async AllDataProfile(req, res){
         const { token } = req.params
@@ -102,25 +95,31 @@ module.exports = {
         const errorsUsername = username.match(/[^a-z0-9-_.]/img)
 
         if(!errors.length && !errorsUsername){
-            const hasUser = await User.findOne({username})
-            if(hasUser){
-                res.json({message: 'Usuário já existente', status: 422, create: false})
+            const blockedNames = [ 'login', 'welcome', 'create-account', 'profile' ]
+            if(blockedNames.includes(username)){
+                res.json({message: 'Nome de usuário não permitido!', status: 401, create: false})
             }
             else{
-                const hasEmail = await User.findOne({email})
-                if(hasEmail){
-                    res.json({message: 'Email já existente', status: 422, create: false})
+                const hasUser = await User.findOne({username})
+                if(hasUser){
+                    res.json({message: 'Usuário já existente', status: 422, create: false})
                 }
                 else{
-                    await bcrypt.hash(password, 10, async (err, result) => {
-                        if(err){
-                            res.json({message: 'Ocorreu um erro ao criptografar a senha', status: 422, create: false})
-                        }
-                        else{
-                            await User.create({username, email, password: result})
-                            res.json({message: 'Conta criada com sucesso', status: 200, create: true})
-                        }
-                    })
+                    const hasEmail = await User.findOne({email})
+                    if(hasEmail){
+                        res.json({message: 'Email já existente', status: 422, create: false})
+                    }
+                    else{
+                        await bcrypt.hash(password, 10, async (err, result) => {
+                            if(err){
+                                res.json({message: 'Ocorreu um erro ao criptografar a senha', status: 422, create: false})
+                            }
+                            else{
+                                await User.create({username, email, password: result})
+                                res.json({message: 'Conta criada com sucesso', status: 200, create: true})
+                            }
+                        })
+                    }
                 }
             }
         }

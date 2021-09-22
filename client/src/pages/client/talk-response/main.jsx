@@ -56,7 +56,10 @@ export default function TalkPage({match: {params}}){
             
             if(data.status === 200 && status === 200){
                 setAlert({msg: 'Talk respondido com sucesso.', type: 'success'})
-                window.location = '/perfil'
+                window.location = '/profile'
+            }
+            else if(data.status === 422 && status === 200){
+                setAlert({msg: data.message || 'Ocorreu um erro', type: 'err'})
             }
             else{
                 window.location = '/login'

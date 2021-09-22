@@ -6,3 +6,11 @@ export const getPersist = ( name ) => {
     
     return (data ? data : false)
 }
+
+export const deletePersist = ({name, logout, url}) => {
+    localStorage.removeItem(name || "anonym-token")
+
+    if(logout) window.location = (url || "/welcome")
+    else return true
+    
+}

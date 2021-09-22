@@ -19,14 +19,14 @@ export default function Router() {
         <BrowserRouter>
             <Switch>
                 {/* client */}
-                    <IdentifyUser exact path="/" component={Home}/>
+                    <IdentifyUser exact path="/" component={HomeSocial} />
+                    <IdentifyUser exact path="/welcome" component={Home}/>
                     <IdentifyUser exact path="/login" component={Login} />
-                    <IdentifyUser exact path="/criar-conta" component={CreateAccount} />
-                    <IdentifyUser exact path="/home" component={HomeSocial} />
-                    <IdentifyUser exact path="/perfil" component={Profile} />
-                    <IdentifyUser exact path="/user/:username" component={Users} />
-                    <IdentifyUser exact path="/perfil/talks" component={Talks} />
-                    <IdentifyUser exact path="/perfil/talks/responder/:_id" component={TalksResponse} />
+                    <IdentifyUser exact path="/create-account" component={CreateAccount} />
+                    <IdentifyUser exact path="/profile" component={Profile} />
+                    <IdentifyUser exact path="/:username" component={Users} />
+                    <IdentifyUser exact path="/profile/talks" component={Talks} />
+                    <IdentifyUser exact path="/profile/talks/answer/:_id" component={TalksResponse} />
 
                     {/* private */}
 

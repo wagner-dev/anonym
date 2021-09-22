@@ -14,7 +14,7 @@ export default function ContentComponent(){
                 <p>Crie uma conta para ver o que os seus amigos estão falando e deixe-os responder às suas perguntas.</p>
             </Content>
             <Button>
-                <a href="/criar-conta">
+                <a href="/create-account">
                     Criar conta
                 </a>
                 <a href="/login">

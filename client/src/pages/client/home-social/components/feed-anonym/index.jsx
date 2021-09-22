@@ -16,7 +16,7 @@ export default function FeedComponent(){
                 <a href='/login'>
                     <input type="submit" value="Login" />
                 </a>
-                <a href='/criar-conta'>
+                <a href='/create-account'>
                     <input type="submit" value="Criar conta" />
                 </a>
             </Login>

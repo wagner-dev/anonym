@@ -50,10 +50,10 @@ export default function ProfileComponent({ user }) {
                                 </Bio>
                                 <Buttons>
                                     <div>
-                                        <a href='/perfil/talks'><input type="submit" value="Talks" /></a>
+                                        <a href='/profile/talks'><input type="submit" value="Talks" /></a>
                                     </div>
                                     <div>
-                                        <a href='/perfil/edit'><input type="submit" value="Editar" /></a>
+                                        <a href='/profile/edit'><input type="submit" value="Editar" /></a>
                                     </div>
                                 </Buttons>
                             </>

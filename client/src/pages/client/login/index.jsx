@@ -19,7 +19,7 @@ export default function LoginComponent(){
         if(data.status === 200 && status === 200 && data.login === true){
             setPersist(data.token)
             setAlert({msg: (data.message || "Sucesso."), type: 'success'})
-            window.location = '/home'
+            window.location = '/'
         }
         else{
             setAlert({msg: (data.message || "Ocorreu um erro"), type: 'err'})

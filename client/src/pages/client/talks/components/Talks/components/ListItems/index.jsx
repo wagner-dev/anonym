@@ -14,7 +14,7 @@ const ListItems = ({ talks}) => {
             {talks.map((item, key) => {
 
                 return (
-                    <a key={key} href={`/perfil/talks/responder/${item._id}`}>
+                    <a key={key} href={`/profile/talks/answer/${item._id}`}>
                         <Talk>
                             <BodyTalk>
                                 <AskTalk>

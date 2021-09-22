@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
         --clr-black-60: rgb(68 73 80);
         --clr-black-40: #9c9c9c;
         --clr-black-20: #dbdbdb;
+        --clr-black-00: rgb(249 249 249);
 
         /* text */
             --text-160: 1.675rem;

@@ -88,7 +88,7 @@ export default function Data({form, submit, RequestLogin, errors, alert}){
                     <input type="submit" value="Entrar" />
                 </Button>
                 <Link>
-                    <a href="/criar-conta">Criar conta</a>
+                    <a href="/create-account">Criar conta</a>
                 </Link>
             </Form>
         </Body>

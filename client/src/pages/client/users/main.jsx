@@ -43,7 +43,7 @@ export default function ProfilePage({ match }){
             {user.isAnonymous? 
                 <NotFound>
                     <h2>Esta página não está disponível.</h2>
-                    <span>O link em que você clicou pode não estar funcionando, ou a página pode ter sido removida. <a href='/home'>Voltar para o anonym</a></span>
+                    <span>O link em que você clicou pode não estar funcionando, ou a página pode ter sido removida. <a href='/'>Voltar para o anonym</a></span>
                 </NotFound>
             :
             <Profile

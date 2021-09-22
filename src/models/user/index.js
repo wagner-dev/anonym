@@ -6,7 +6,7 @@ const followersSchema = mongoose.Schema({
         ref: 'user',
         required: true
     },
-    isWarned: {
+    iSeenWarning: {
         type: Boolean,
         default: false
     }
@@ -19,10 +19,6 @@ const followingsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: true
-    },
-    isWarned: {
-        type: Boolean,
-        default: false
     }
 },{
     timestamps: true
