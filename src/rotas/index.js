@@ -11,6 +11,7 @@ router.get('/user/:token/index', UserController.index)
 
 router.get('/user/:token/indexfull', UserController.AllDataProfile)
 
+router.get('/user/search', UserController.search)
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),
     body("password").isLength({min: 8, max: 64}),
@@ -55,7 +56,6 @@ router.post('/talk/response/create', [
     body('_id').notEmpty(),
     body('body').isLength({min: 1, max: 420})
 ], TalkController.CreateResponse)
-
 
 // timeline
 

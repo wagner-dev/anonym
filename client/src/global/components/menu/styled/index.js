@@ -35,7 +35,8 @@ export const Title = styled.a`
     }
 `
 export const Content = styled.div`
-
+    display: flex;
+    align-items: center;
 `
 export const Link = styled.a`
     font-size: var(--text-90);
@@ -110,7 +111,7 @@ export const TitleProfile = styled.div`
 
 `
 
-export const OptionsSettings = styled.div`
+export const BodyCard = styled.div`
     width: 100%;
     height: 100vh;
     position: absolute;
@@ -150,5 +151,31 @@ export const OptionsSettings = styled.div`
             width: 80%;
             right: 4%;
         }
+    }
+`
+
+export const LinkIcon = styled.div`
+    margin: 0rem .5rem;
+    width: 20px;
+    height: 20px;
+
+    svg{
+        color: var(--clr-black-40);
+        width: 100%;
+        height: 100%;
+    }
+    span{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        position: absolute;
+        padding: .2rem;
+        background: red;
+        color: #fff;
+        font-size: var(--text-60);
+        transform: translate(9px, -5px);
     }
 `

@@ -2,6 +2,7 @@ const express = require('express')
 const server = express()
 const rotas = require('./rotas/')
 const cors = require('cors')
+const helmet = require("helmet")
 const mongoose = require('mongoose')
 
 // data
@@ -12,6 +13,8 @@ server.use(express.json())
 server.use(cors({
     origin: 'http://localhost:3000'
 }))
+
+server.use(helmet())
 
 // rotas
 server.use('/api', rotas)

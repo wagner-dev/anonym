@@ -45,6 +45,11 @@ const UserSchema = mongoose.Schema({
         required: true,
         type: String
     },
+    img_profile: {
+        type: String,
+        max: 240,
+        min: 4
+    },
     desc: {
         type: String,
         max: 80,
@@ -53,23 +58,23 @@ const UserSchema = mongoose.Schema({
     followers: [ followersSchema ],
     followings: [ followingsSchema ],
     
+    link: {
+        type: String,
+    },
     isAdmin: {
         type: Boolean,
         default: false
     },
-    isPrivate: {
+    is_verified: {
         type: Boolean,
         default: false
-    },
-    link_instagram: {
-        type: String,
-    },
-    link_yt: {
-        type: String,
     },
 },{
     timestamps: true
 })
+
+UserSchema.index({username: 'text'})
+
 const User = mongoose.model('user', UserSchema)
 
 module.exports = User

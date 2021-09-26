@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const User = require('../../models/user/index')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -5,12 +6,12 @@ const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
 const Talk = require('../../models/talk/index')
-const nodemailer = require('nodemailer')
 
 
 module.exports = {
     async indexall(req, res){
-        
+        // await User.findByIdAndUpdate('614f4be9e9f848ed6c385273', {$push: {followers :{_id: '614f81817705e74ed52e852f', iSeenWarning: true}}})
+        res.json(await User.find({}))
     },
     async AllDataProfile(req, res){
         const { token } = req.params
@@ -56,37 +57,40 @@ module.exports = {
             const user = await verifyToken(token)
             if(user){
                 User.findOne({_id: user._id}).then(async ({username, email}) => {
+                    const activity = await User.aggregate([
+                        {$match: {_id: mongoose.Types.ObjectId(user._id), 'followers.iSeenWarning': false}},
+                        {$project: {
+                            followers: {
+                                $filter: {
+                                    input: "$followers",
+                                    as: "item",
+                                    cond: {
+                                        $eq: ['$$item.iSeenWarning', false]
+                                    }
+                                }
+                            }
+                        }},                        
+                    ])
                     if(username){
                         res.json({"user": {
                             username,
                             email,
+                            activity: activity?.length ? activity[0].followers.length : 0
                         }})
                     }
                     else{
-                        res.json({message: "ok", status: 401,
-                        user:{
-                            isAnonymous: true
-                        }})
+                        res.json({message: "ok", status: 401, user:{ isAnonymous: true }})
                     }
                 }).catch(() => {
-                    res.json({message: "ok", status: 401,
-                    user:{
-                        isAnonymous: true
-                    }})
+                    res.json({message: "ok", status: 401, user:{ isAnonymous: true }})
                 })
             }
             else{
-                res.json({message: "ok", status: 401,
-                user:{
-                    isAnonymous: true
-                }})
+                res.json({message: "ok", status: 401, user:{ isAnonymous: true }})
             }
         }
         else{
-            res.json({message: "ok", status: 401,
-            user:{
-                isAnonymous: true
-            }})
+            res.json({message: "ok", status: 401, user:{ isAnonymous: true }})
         }
     },
     async create(req, res) {
@@ -95,7 +99,7 @@ module.exports = {
         const errorsUsername = username.match(/[^a-z0-9-_.]/img)
 
         if(!errors.length && !errorsUsername){
-            const blockedNames = [ 'login', 'welcome', 'create-account', 'profile' ]
+            const blockedNames = [ 'login', 'welcome', 'create-account', 'profile', 'search']
             if(blockedNames.includes(username)){
                 res.json({message: 'Nome de usuário não permitido!', status: 401, create: false})
             }
@@ -316,6 +320,29 @@ module.exports = {
             res.json({message: 'Ocorreu um erro', status: 500})
         }
 
+    },
+    async search(req, res) {
+        const token = req.headers.authorization.split(" ")[1]
+        const quest = req.query.q
+        try{
+            if(quest && token){
+                const validToken = verifyToken(token)
+
+                if(validToken){
+                    const search = await User.find({$regex: {$text: {$search: quest}}})
+                    res.json({message: 'ok', result: search, status: 200})
+                }
+                else{
+                    res.json({message: 'Não autorizado', status: 401})
+                }
+            }
+            else{
+                res.json({message: 'Não autorizado', status: 401})
+            }
+        }
+        catch{
+            res.json({message: 'Ocorreu um erro', status: 500})
+        }
     }
 
 }
