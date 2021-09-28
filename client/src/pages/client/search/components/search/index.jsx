@@ -6,9 +6,11 @@ import {
 } from './styled/index'
 import Content from './listItems/index'
 
-export default function SearchComponent({data, request}){
+export default function SearchComponent({data, request, load, setLoad}){
+
+    // content do resultado do search
     const [cardAtived, setCardAtived] = useState(false)
-    
+
     // value search
     const [searchValue, setSearchValue] = useState('')
     // err - valid input
@@ -18,12 +20,14 @@ export default function SearchComponent({data, request}){
         if(searchValue.length){
             // reset err
             setErr(false)
-            request(searchValue)
+            setLoad({load: true})
+            setTimeout(() => request(searchValue), 200)
         }
         else{
             setErr(true)
         }
     }
+
     return (
         <SearchBody>
             <Title>
@@ -47,7 +51,10 @@ export default function SearchComponent({data, request}){
             </Search>
 
             {cardAtived && 
-                <Content data={data} />
+                
+                <Content 
+                data={data}
+                load={load} />
             }
         </SearchBody>
     )

@@ -100,6 +100,7 @@ export const Pointer = styled.div`
 `
 
 export const ContentItem = styled.a`
+    height: 95%;
     display: flex;
     margin: .2rem 0rem;
     padding: .5rem;
@@ -113,6 +114,14 @@ export const ContentImage = styled.div`
         width: 45px;
         height: 45px;
     }
+
+
+    @media only screen and (max-width: 620px){
+        img{
+            width: 40px;
+            height: 40px;
+        }
+    }
 `
 
 export const ContentBody = styled.div`
@@ -124,7 +133,7 @@ export const ContentUser = styled.div`
         font-size: var(--text-90);
     }
 
-    @media only screen and (max-width){
+    @media only screen and (max-width: 620px){
         span{
             font-size: var(--text-80);
         }
@@ -136,9 +145,32 @@ export const ContentBio = styled.div`
         color: var(--clr-black-40);
     }
 
-    @media only screen and (max-width){
+    @media only screen and (max-width: 620px){
         span{
             font-size: var(--text-70);
+        }
+    }
+`
+
+export const Load = styled.div`
+    display: 100%;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 25px;
+        height: 25px;
+        animation: rotateXY .7s linear infinite;
+    
+    
+        @keyframes rotateXY {
+            0%{
+                transform: rotate(0deg)
+            }
+            100%{
+                transform: rotate(360deg);
+            }
         }
     }
 `
