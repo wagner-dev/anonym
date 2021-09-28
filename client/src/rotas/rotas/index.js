@@ -12,6 +12,7 @@ import { Switch, BrowserRouter } from 'react-router-dom'
     import Users from '../../pages/client/users/main'
     import Talks from '../../pages/client/talks/main'
     import TalksResponse from '../../pages/client/talk-response/main'
+    import Search from '../../pages/client/search/main'
     // private
 
 export default function Router() {
@@ -22,6 +23,7 @@ export default function Router() {
                     <IdentifyUser exact path="/" component={HomeSocial} />
                     <IdentifyUser exact path="/welcome" component={Home}/>
                     <IdentifyUser exact path="/login" component={Login} />
+                    <IdentifyUser exact path="/search" component={Search} />
                     <IdentifyUser exact path="/create-account" component={CreateAccount} />
                     <IdentifyUser exact path="/profile" component={Profile} />
                     <IdentifyUser exact path="/:username" component={Users} />

@@ -73,7 +73,6 @@ const UserSchema = mongoose.Schema({
     timestamps: true
 })
 
-UserSchema.index({username: 'text'})
 
 const User = mongoose.model('user', UserSchema)
 

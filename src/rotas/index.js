@@ -12,6 +12,7 @@ router.get('/user/:token/index', UserController.index)
 router.get('/user/:token/indexfull', UserController.AllDataProfile)
 
 router.get('/user/search', UserController.search)
+
 router.post('/user/check', [
     body("username").isLength({min: 2, max: 64}),
     body("password").isLength({min: 8, max: 64}),

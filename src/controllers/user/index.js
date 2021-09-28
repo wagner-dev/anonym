@@ -329,7 +329,7 @@ module.exports = {
                 const validToken = verifyToken(token)
 
                 if(validToken){
-                    const search = await User.find({$regex: {$text: {$search: quest}}})
+                    const search = await User.find({username: {$regex: quest}}, {_id: 0,img_profile: 1, username: 1, desc: 1, is_verified: 1})
                     res.json({message: 'ok', result: search, status: 200})
                 }
                 else{
