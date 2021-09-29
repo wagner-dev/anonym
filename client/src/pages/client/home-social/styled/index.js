@@ -6,6 +6,7 @@ export const Body = styled.section`
     display: flex;
 
     @media only screen and (max-width: 620px){
+        margin: 4rem auto 0rem auto;
         width: 100%;
         flex-direction: column;
     }

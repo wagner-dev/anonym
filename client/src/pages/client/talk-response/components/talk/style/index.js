@@ -5,7 +5,7 @@ export const Body = styled.article`
     width: 60%;
     margin: 0rem auto;
     padding: 0rem 2rem;
-    box-shadow: 0px 0px 10px 5px #f1f1f1;
+    box-shadow: 0px 0px 6px 3px #f1f1f1;
     border-radius: 8px;
     display: flex;
     flex-direction: column;

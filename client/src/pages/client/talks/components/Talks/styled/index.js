@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Body = styled.article`
     width: 60%;
     margin: 0rem auto;
-    box-shadow: 0px 0px 10px 5px #f1f1f1;
+    box-shadow: 0px 0px 6px 3px #f1f1f1;
     border-radius: 8px;
     display: flex;
 

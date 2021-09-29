@@ -12,6 +12,7 @@ import {
 } from './styled/index'
 import ImageIcon from '../../../../../assets/img/global/profile/index.jpg'
 import LoadIcon from '../../../../../assets/svg/global/load/index.svg'
+import formatNumber from '../../../../../services/formatNumber/index'
 
 export default function ProfileComponent({ user }) {
     
@@ -33,15 +34,15 @@ export default function ProfileComponent({ user }) {
                                 </User>
                                 <Data>
                                     <div title={user.talksCount}>
-                                        <span title={user.talksCount}>{user.talksCount}</span>
+                                        <span title={user.talksCount}>{formatNumber(user.talksCount)}</span>
                                         <span>talk</span>
                                     </div>
                                     <div title={user.followers}>
-                                        <span>{user.followers}</span>
+                                        <span>{formatNumber(user.followers)}</span>
                                         <span>seguidore(s)</span>
                                     </div>
                                     <div title={user.followings}>
-                                        <span>{user.followings}</span>
+                                        <span>{formatNumber(user.followings)}</span>
                                         <span>seguindo</span>
                                     </div>
                                 </Data>

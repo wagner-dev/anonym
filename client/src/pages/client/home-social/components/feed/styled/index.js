@@ -35,7 +35,7 @@ export const Talk = styled.li`
     border-radius: 5px;
 
     @media only screen and (max-width: 620px){
-        width: 100%;
+        width: 95%;
     } 
 `
 export const StartTalk = styled.div`

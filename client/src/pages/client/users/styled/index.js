@@ -12,7 +12,7 @@ export const ProfileBody = styled.section`
     width: 60%;
     /* height: 60vh; */
     margin: 0rem auto;
-    box-shadow: 0px 0px 10px 5px #f1f1f1;
+    box-shadow: 0px 0px 6px 3px #f1f1f1;
     border-radius: 8px;
 
     @media only screen and (max-width: 920px) {

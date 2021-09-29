@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Body = styled.article`
     width: 74%;
     height: 80vh;
-    box-shadow: 0px 0px 10px 3px #f1f1f1;
+    box-shadow: 0px 0px 6px 3px #f1f1f1;
     justify-content: center;
     display: flex;
     flex-direction: column;

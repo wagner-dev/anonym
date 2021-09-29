@@ -10,8 +10,7 @@ const Talk = require('../../models/talk/index')
 
 module.exports = {
     async indexall(req, res){
-        // await User.findByIdAndUpdate('614f4be9e9f848ed6c385273', {$push: {followers :{_id: '614f81817705e74ed52e852f', iSeenWarning: true}}})
-        res.json(await User.find({}))
+        
     },
     async AllDataProfile(req, res){
         const { token } = req.params
