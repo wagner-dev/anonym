@@ -52,7 +52,7 @@ const UserSchema = mongoose.Schema({
     },
     desc: {
         type: String,
-        max: 80,
+        max: 140,
         default: "Oi! Estou usando o Anonym." 
     },
     followers: [ followersSchema ],

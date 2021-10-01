@@ -6,11 +6,12 @@ const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
 const Talk = require('../../models/talk/index')
+const { differenceInDays } = require('date-fns')
 
 
 module.exports = {
     async indexall(req, res){
-        
+        res.json(await User.find({}))
     },
     async AllDataProfile(req, res){
         const { token } = req.params
@@ -55,7 +56,7 @@ module.exports = {
         if(token){
             const user = await verifyToken(token)
             if(user){
-                User.findOne({_id: user._id}).then(async ({username, email}) => {
+                User.findOne({_id: user._id}).then(async ({username, email, link, desc, img_profile}) => {
                     const activity = await User.aggregate([
                         {$match: {_id: mongoose.Types.ObjectId(user._id), 'followers.iSeenWarning': false}},
                         {$project: {
@@ -74,7 +75,10 @@ module.exports = {
                         res.json({"user": {
                             username,
                             email,
-                            activity: activity?.length ? activity[0].followers.length : 0
+                            desc,
+                            link,
+                            img_profile,
+                            activity: activity?.length ? activity[0].followers.length : 0,
                         }})
                     }
                     else{
@@ -195,10 +199,11 @@ module.exports = {
                         followings: user.followings.length,
                         talks: talks,
                         username: user.username, 
-                        i_follow: (i_follow ? true : false),
-                        i_follow_back: is_follow_me && !i_follow ? false : null,
                         desc: user.desc, 
-                        talksCount
+                        link: user.link,
+                        talksCount,
+                        i_follow_back: is_follow_me && !i_follow ? false : null,
+                        i_follow: (i_follow ? true : false),
                     }, status: 200})
                 }
                 else{
@@ -339,6 +344,52 @@ module.exports = {
                 res.json({message: 'Não autorizado', status: 401})
             }
         }
+        catch{
+            res.json({message: 'Ocorreu um erro', status: 500})
+        }
+    },
+    async updateAccount(req, res){
+        const token = req.headers.authorization?.split(' ')[1]
+        const { username, email, desc, link} = req.body
+        const errorsUsername = username.match(/[^a-z0-9-_.]/img)
+        const { errors } = validationResult(req)
+
+        try{
+            
+            if(!errors.length && token && !errorsUsername){
+                const blockedNames = [ 'login', 'welcome', 'create-account', 'profile', 'search']
+                if(blockedNames.includes(username)){
+                    res.json({message: 'Nome de usuário não permitido!', status: 401})
+                }
+                else{
+                    const user = verifyToken(token)
+                    if(user){
+                        const LIMIT_TIME = 30 // in days 
+                        const userBefore = await User.findOne({_id: user._id}, {username: 1, email: 1, desc: 1, link: 1, updatedAt: 1})
+                        const wasRecentlyUpdate = differenceInDays(new Date(), userBefore.updatedAt) < LIMIT_TIME ? true : false
+                          if(wasRecentlyUpdate){
+                            res.json({message: 'Você atualizou seu perfil nos últimos 30 dias.', status: 405})
+                        }
+                        else{
+                            const query = {_id: user._id}
+                            userBefore.username != username && await User.findByIdAndUpdate(query, {$set: {username}})
+                            userBefore.email != email && await User.findByIdAndUpdate(query, {$set: {email}})
+                            userBefore.desc != desc && await User.findByIdAndUpdate(query, {$set: {desc}})
+                            userBefore?.link != link && await User.findByIdAndUpdate(query, {$set: {link}})
+                            res.json({message: 'Perfil atualizado', status: 200})
+                        }
+                        
+                    }
+                    else{
+                        res.json({message: 'Não autorizado', status: 401})
+                    }
+                }
+            }
+            else{
+                res.json({message: 'Dados inválidos', status: 401})
+            }
+
+        }   
         catch{
             res.json({message: 'Ocorreu um erro', status: 500})
         }

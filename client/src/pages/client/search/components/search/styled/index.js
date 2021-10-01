@@ -102,6 +102,9 @@ export const Pointer = styled.div`
 export const ContentItem = styled.a`
     height: 95%;
     display: flex;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     margin: .2rem 0rem;
     padding: .5rem;
     border-radius: 4px;
@@ -140,6 +143,7 @@ export const ContentUser = styled.div`
     }
 `
 export const ContentBio = styled.div`
+    display: flex;
     span{
         font-size: var(--text-80);
         color: var(--clr-black-40);

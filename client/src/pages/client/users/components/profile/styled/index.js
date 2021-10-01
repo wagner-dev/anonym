@@ -96,7 +96,7 @@ export const Buttons = styled.div`
     margin: .5rem 0rem 0rem 0rem;
     display: flex;
     justify-content: space-between;
-    div:first-child, a:first-child{
+    > div:first-child, > a:first-child{
         width: 45%;
         input{
             padding: .5rem 1rem;
@@ -147,20 +147,18 @@ export const Social = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    div{
-        padding: .5rem .2rem;
-        background: #f9f9f9;
-        margin: 0rem .3rem;
-        display: flex;
-        border: 1px solid var(--clr-black-20);
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 4px;
-        svg{
-            width: 100%;
-            height: 100%;
-        }    
+    cursor: pointer;
+    width: 100%;
+    padding: .5rem .2rem;
+    background: #f9f9f9;
+    margin: 0rem .3rem;
+    border: 1px solid var(--clr-black-20);
+    border-radius: 4px;
+    span{
+        font-size: var(--text-80);
     }
+    svg{
+        width: 15px;
+        height: 15px;
+    }    
 `
