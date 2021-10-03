@@ -13,6 +13,8 @@ router.get('/user/:token/indexfull', UserController.AllDataProfile)
 
 router.get('/user/search', UserController.search)
 
+router.get('/user/notifications', UserController.indexNotifications)
+
 router.put('/user/update-account',[
     body("username").isLength({min: 2, max: 64}),
     body("email").isEmail().isLength({min: 2, max: 64}),

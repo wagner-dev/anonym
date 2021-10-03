@@ -14,6 +14,7 @@ import { Switch, BrowserRouter } from 'react-router-dom'
     import TalksResponse from '../../pages/client/talk-response/main'
     import Search from '../../pages/client/search/main'
     import UpdateAccount from '../../pages/client/update-account/main'
+    import Activity from '../../pages/client/activity/main'
     // private
 
 export default function Router() {
@@ -31,6 +32,7 @@ export default function Router() {
                     <IdentifyUser exact path="/:username" component={Users} />
                     <IdentifyUser exact path="/profile/talks" component={Talks} />
                     <IdentifyUser exact path="/profile/talks/answer/:_id" component={TalksResponse} />
+                    <IdentifyUser exact path="/profile/activity" component={Activity} />
 
                     {/* private */}
 

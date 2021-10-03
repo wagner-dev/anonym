@@ -64,6 +64,11 @@ export const ProfileDataTalk = styled.div`
     flex-direction: column;
     span:first-child{
         font-size: var(--text-90);
+    
+        :hover{
+            transition: .8s;
+            text-decoration: underline;
+        }
     }
     span:last-child{
         font-size: var(--text-70);

@@ -21,7 +21,12 @@ const TalkSchema = mongoose.Schema({
         max: 420,
         required: true
     },
-    response: [ ResponseSchema ]
+    response: [ ResponseSchema ],
+
+    iSeenWarning: {
+        type: Boolean,
+        default: false
+    },
 }, {
     timestamps: true
 })

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const User = require('../../models/user/index')
 const Talk = require('../../models/talk/index')
 const { validationResult } = require('express-validator')
@@ -45,6 +46,8 @@ module.exports = {
                 const talks = await Talk.find({toUserId: ofUser._id, response: {$size: 0}}, {body: 1, createdAt: 1})
                                         .limit(15 * limit)
                                         .sort({_id: -1})
+                await Talk.updateMany({toUserId: ofUser._id, response: {$size: 0}, iSeenWarning: false}, {$set: {iSeenWarning: true}})
+                
                 res.json({status: 200, message: 'ok',talks, talksCount})
             }
             else{

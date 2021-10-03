@@ -19,6 +19,8 @@ export default function UpdateAccountComponent({ user }){
     const [alert, setAlert] = useState({msg: '', type: 'err'})
 
     async function RequestUpdate(dataForm){
+        //  reset alert
+        setAlert({msg: "", type: 'err'})
         try{
             const token = {headers: {Authorization: `Bearer ${getPersist()}`}}
             const {data, status} = await api.put('/user/update-account', dataForm, token)

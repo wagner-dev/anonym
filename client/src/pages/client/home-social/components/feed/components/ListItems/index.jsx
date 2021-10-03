@@ -30,7 +30,7 @@ function ListItems({ talks }) {
                                             <img src={ProfileIcon} alt="foto de perfil" />
                                         </ProfileImageTalk>
                                         <ProfileDataTalk>
-                                            <span>{item.toUserId.username}</span>
+                                            <span><a href={`/${item.toUserId.username}`}>{item.toUserId.username}</a></span>
                                             <span>{time}</span>
                                         </ProfileDataTalk>
                                     </ProfileTalk>
