@@ -6,13 +6,10 @@ const { validationResult } = require('express-validator')
 const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
 const Talk = require('../../models/talk/index')
-const { differenceInDays, isAfter, getTime} = require('date-fns')
+const { differenceInDays, getTime} = require('date-fns')
 
 
 module.exports = {
-    async indexall(req, res){
-        res.json(await User.find({}))
-    },
     async AllDataProfile(req, res){
         const { token } = req.params
         const { limit } = req.query
@@ -369,12 +366,24 @@ module.exports = {
                             res.json({message: 'Você atualizou seu perfil nos últimos 30 dias.', status: 405})
                         }
                         else{
-                            const query = {_id: user._id}
-                            userBefore.username != username && await User.findByIdAndUpdate(query, {$set: {username}})
-                            userBefore.email != email && await User.findByIdAndUpdate(query, {$set: {email}})
-                            userBefore.desc != desc && await User.findByIdAndUpdate(query, {$set: {desc}})
-                            userBefore?.link != link && await User.findByIdAndUpdate(query, {$set: {link}})
-                            res.json({message: 'Perfil atualizado', status: 200})
+                            const existsUserName = await User.findOne({username})
+                            if(!existsUserName || existsUserName.username == userBefore.username){
+                                const existsEmail = await User.findOne({email})
+                                if(!existsEmail || existsEmail.email == userBefore.email){
+                                    const query = {_id: user._id}
+                                    userBefore.username != username && await User.findByIdAndUpdate(query, {$set: {username}})
+                                    userBefore.email != email && await User.findByIdAndUpdate(query, {$set: {email}})
+                                    userBefore.desc != desc && await User.findByIdAndUpdate(query, {$set: {desc}})
+                                    userBefore?.link != link && await User.findByIdAndUpdate(query, {$set: {link}})
+                                    res.json({message: 'Perfil atualizado', status: 200})
+                                }
+                                else{
+                                    res.json({message: 'Email já existente', status: 401})
+                                }
+                            }
+                            else{
+                                res.json({message: 'Usuário já existente', status: 401})
+                            }
                         }
                         
                     }

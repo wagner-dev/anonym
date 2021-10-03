@@ -17,7 +17,7 @@ export const Menu = styled.nav`
 `
 export const Title = styled.a`
     h1{
-        font-size: var(--text-160);
+        font-size: 1.8rem;
         font-family: 'Montserrat' !important;
         user-select: none;
         color: var(--clr-primary-100);
@@ -30,7 +30,7 @@ export const Title = styled.a`
 
     @media only screen and (max-width: 620px) {
         h1{
-            font-size: var(--text-120);
+            font-size: var(--text-150);
         }
     }
 `

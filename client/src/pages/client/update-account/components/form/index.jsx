@@ -10,7 +10,7 @@ import {
     Alert
 } from './styled'
 import ProfileIcon from '../../../../../assets/img/global/profile/index.jpg'
-export default function FormComponent({ user, submit, alert, register, handleSubmit }){
+export default function FormComponent({ user, submit, alert, register, handleSubmit, errors }){
 
     return(
         <Body>
@@ -32,7 +32,7 @@ export default function FormComponent({ user, submit, alert, register, handleSub
                     :
                         null
                 }
-                <Input>
+                <Input err={errors.username ? true : false}>
                     <span>Username</span>
                     <input 
                     {...register("username", {required: true, minLength: 2, maxLength: 64, pattern: /^[A-Za-z0-9-_.]+$/img})}
@@ -42,7 +42,7 @@ export default function FormComponent({ user, submit, alert, register, handleSub
                     minLength="2"
                     placeholder="Digite seu username" />
                 </Input>
-                <Input>
+                <Input err={errors.email ? true : false}>
                     <span>Email</span>
                     <input
                     required
@@ -51,7 +51,7 @@ export default function FormComponent({ user, submit, alert, register, handleSub
                     type="email"
                     placeholder="Digite seu email" />
                 </Input>
-                <InputBio>
+                <InputBio err={errors.desc ? true : false}>
                     <span>Descrição</span>
                     <textarea
                     required
@@ -60,7 +60,7 @@ export default function FormComponent({ user, submit, alert, register, handleSub
                     {...register("desc", {required: true, minLength: 1, maxLength: 140})}
                     placeholder="Digite sua descrição/biografia" />
                 </InputBio>
-                <Input>
+                <Input err={errors.link ? true : false}>
                     <span>Link</span>
                     <input 
                     {...register("link", {required: false, minLength: 1, maxLength: 140})}
@@ -68,7 +68,7 @@ export default function FormComponent({ user, submit, alert, register, handleSub
                 </Input>
                 <InputSubmit>
                     <input type="submit" value="Atualizar" />
-                    <span>Você pode alterar o seu nome apenas uma vez a cada 30 dias.</span>
+                    <span>Você pode alterar o seu perfil apenas uma vez a cada 30 dias.</span>
                 </InputSubmit>
             </Form>
         </Body>

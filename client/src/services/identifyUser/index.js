@@ -16,7 +16,10 @@ export const IdentifyUser = ({component: Component, ...rest}) => {
                 if(status === 200){
                     setUser(data.user)
                 }
+            }).catch(() => {
+                setUser({isAnonymous: true})
             })
+            
         }
         else{
             setUser({isAnonymous: true})

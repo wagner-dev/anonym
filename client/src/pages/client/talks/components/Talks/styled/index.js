@@ -30,11 +30,8 @@ export const Empty = styled.div`
     span{
         margin: .5rem 0rem 0rem 0rem;
         font-size: var(--text-90);
+        text-align: center;
     }
-
-
-
-
 
     @media only screen and (max-width: 620px) {
         img{

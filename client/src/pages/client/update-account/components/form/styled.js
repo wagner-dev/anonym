@@ -56,7 +56,7 @@ export const Input = styled.div`
         font-size: var(--text-90);
         border-radius: 4px;
         outline: none;
-        border: 1px solid var(--clr-black-40);
+        border: 1px solid ${({err}) => err ? 'red' : 'var(--clr-black-40)'};
     }
 
     @media only screen and (max-width: 620px) {
@@ -84,7 +84,7 @@ export const InputBio = styled.div`
         font-size: var(--text-90);
         border-radius: 4px;
         outline: none;
-        border: 1px solid var(--clr-black-40);
+        border: 1px solid ${({err}) => err ? 'red' : 'var(--clr-black-40)'};
     }
 
     @media only screen and (max-width: 620px) {

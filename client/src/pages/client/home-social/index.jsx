@@ -8,6 +8,7 @@ import {
 } from './styled/'
 export default function HomeSocialComponent({ setLimit, talks, total, loading }){
     const { user } = useUser()
+
     return(
         <>
             <Body>

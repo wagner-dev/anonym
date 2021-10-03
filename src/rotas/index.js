@@ -3,8 +3,6 @@ const UserController = require('../controllers/user/index')
 const TalkController = require('../controllers/talk/index')
 const { body } = require('express-validator')
 
-router.get('/user/index', UserController.indexall)
-
 router.get('/user/:username/:token/data-user', UserController.allUserData)
 
 router.get('/user/:token/index', UserController.index)

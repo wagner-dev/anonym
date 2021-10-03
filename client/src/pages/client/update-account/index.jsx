@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 export default function UpdateAccountComponent({ user }){
 
     // validate
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors }} = useForm()
 
 
     // alerts
@@ -36,8 +36,6 @@ export default function UpdateAccountComponent({ user }){
         }
     }
 
-
-
     
     const addInitialValues = useCallback(() => {
         setValue("username", user.username)
@@ -60,7 +58,8 @@ export default function UpdateAccountComponent({ user }){
                 user={user}
                 alert={alert}
                 register={register}
-                handleSubmit={handleSubmit} />
+                handleSubmit={handleSubmit}
+                errors={errors} />
             </Content>
         </Body>
     )

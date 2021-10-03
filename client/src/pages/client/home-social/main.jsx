@@ -24,6 +24,7 @@ export default function HomeSocialPage(){
         if(token){
             const { data, status } = await api.get(`/user/${token}/timeline?limit=${limit}`)
             if(data.status === 200 && status === 200){
+                if(!data.talks.length) window.location.href= '/search'
                 setTalks({
                     data: data.talks, 
                     meta: {
@@ -40,7 +41,7 @@ export default function HomeSocialPage(){
     useEffect(() => { 
         // title
         document.title = 'Anonym - home'
-        
+        console.log(talks.loading)
         // request
         RequestStart()
     }, [ RequestStart ])
