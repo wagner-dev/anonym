@@ -1,6 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const keys = require('../../keys/index')
+
 module.exports = {
     verifyToken( token ){
         const SECRET = process.env.SECRET_JWT

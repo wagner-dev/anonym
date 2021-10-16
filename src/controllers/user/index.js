@@ -3,7 +3,6 @@ const User = require('../../models/user/index')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
-const keys = require('../../keys/index')
 const { verifyToken } = require('../../services/auth/index')
 const Talk = require('../../models/talk/index')
 const { differenceInDays, getTime} = require('date-fns')
@@ -150,8 +149,9 @@ module.exports = {
                             }
                             else{
                                 if(result){
+                                    const SECRET_JWT = process.env.SECRET_JWT
                                     const payload = {_id: account._id}
-                                    const token = jwt.sign( payload, keys.jwt, {expiresIn: "28d"})
+                                    const token = jwt.sign( payload, SECRET_JWT, {expiresIn: "28d"})
                                     res.json({ message: "Logado com sucesso.", status: 200, login: true, token})
                                 }
                                 else{
@@ -438,5 +438,4 @@ module.exports = {
             res.json({message: 'Ocorreu um erro', status: 500})
         }
     }
-
 }
