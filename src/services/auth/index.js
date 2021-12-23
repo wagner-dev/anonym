@@ -6,7 +6,8 @@ module.exports = {
         const SECRET = process.env.SECRET_JWT
 
         if(token) return jwt.verify(token, SECRET ,(err, result) => err ? false : result)
-        else return false
+        else 
+            return false
 
     }
 }

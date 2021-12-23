@@ -1,25 +1,28 @@
+require('dotenv').config()
+
 const express = require('express')
 const server = express()
-const rotas = require('./rotas/')
+const routes = require('./routes')
 const cors = require('cors')
 const helmet = require("helmet")
 const mongoose = require('mongoose')
 
-// data
-mongoose.connect('mongodb://localhost:27017/anonym')
+// database
+const DATABASE_HOST = process.env.ANONYM_DATABASE_HOST
+mongoose.connect(DATABASE_HOST)
 
 // config
 server.use(express.json())
 server.use(cors({
-    origin: 'http://localhost:3000'
+    origin: process.env.ANONYM_CLIENT_HOST
 }))
 
 server.use(helmet())
 
 // rotas
-server.use('/api', rotas)
+server.use('/api', routes)
 
 
 // on
-const PORT = 2999
+const PORT = 2999 || process.env.PORT
 server.listen(PORT, () => console.log('Server started...'))
